@@ -3,7 +3,6 @@ import MyCarousel from './Carousel';
 import {View, Text,Image,TouchableOpacity,Modal,AsyncStorage} from 'react-native';
 import styles from '../styles/index.style';
 import {CardSection,Button} from './common';
-import firebase from 'firebase';
 import {Actions} from 'react-native-router-flux';
 import Header from './Header';
 
@@ -13,13 +12,8 @@ class Main extends Component{
     this.setState({'modalShow':!this.state.modalShow});
   }
   onLogout(){
-    firebase.auth().signOut().then(function() {
-  // Sign-out successful.
-  AsyncStorage.multiSet([['user', ""], ['password', ""]], (err)=>console.log(err));
-  Actions.auth();
-}, function(error) {
-  // An error happened.
-});
+    AsyncStorage.multiSet([['user', ""], ['password', ""]], (err)=>console.log(err));
+    Actions.auth();
     this.setState({'modalShow':!this.state.modalShow});
   }
   render(){

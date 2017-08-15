@@ -47,12 +47,10 @@ export default class MyCarousel extends Component {
     render () {
         return (
                 <ScrollView
-                  style={styles.scrollview}
+                  //style={styles.scrollview}
                   indicatorStyle={'white'}
                   scrollEventThrottle={200}
                 >
-                    <Text style={styles.title}>Example 1</Text>
-                    <Text style={styles.subtitle}>No momentum | Scale | Opacity</Text>
                     { this.carousel }
                 </ScrollView>
         );

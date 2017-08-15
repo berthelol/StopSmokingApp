@@ -5,12 +5,13 @@ import styles from '../styles/index.style';
 import {CardSection,Button} from './common';
 import firebase from 'firebase';
 import {Actions} from 'react-native-router-flux';
+import Header from './Header';
 
 class Main extends Component{
   state={modalShow:false};
   onModalShow(){
     this.setState({'modalShow':!this.state.modalShow});
-  }  
+  }
   onLogout(){
     firebase.auth().signOut().then(function() {
   // Sign-out successful.
@@ -24,15 +25,10 @@ class Main extends Component{
   render(){
     return (
       <View style={styles.container}>
-        <View style={{flexDirection: 'row',justifyContent: 'space-between'}}>
-          <Text style={{alignSelf: 'flex-start',marginTop:20}}>Hello Loïc</Text>
-          <TouchableOpacity onPress={this.onModalShow.bind(this)}>
-            <Image
-              source={require('../images/settings.png')}
-              style={styles.barButtonIconStyle}
-            />
-          </TouchableOpacity>
-        </View>
+        <Header onModalShow={this.onModalShow.bind(this)}/>
+        <TouchableOpacity  style={styles.addCigBtnStyle}>
+          <Text style={styles.addCigBtnTextStyle}>+</Text>
+        </TouchableOpacity>
         <Text style={styles.title}>Example 1</Text>
         <Text style={styles.subtitle}>No momentum | Scale | Opacity</Text>
           <MyCarousel />

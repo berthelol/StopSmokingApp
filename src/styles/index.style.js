@@ -68,5 +68,23 @@ export default StyleSheet.create({
     position: 'relative',
     flex: 1,
     justifyContent: 'center'
+  },
+  addCigBtnStyle:{
+    //flex:1,
+    alignSelf:'center',
+    backgroundColor:"#FFF",
+    borderColor:"#007aff",
+    borderRadius:100,
+    borderWidth:1,
+    marginLeft:5,
+    marginRight:5,
+    padding:20,
+    paddingRight:27,
+    paddingLeft:27
+  },
+  addCigBtnTextStyle:{
+  alignSelf:'center',
+  color:"#007aff",
+  fontSize:30
   }
 });

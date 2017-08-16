@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Text} from 'react-native';
 import {Card, CardSection, Input, Button, Spinner} from './common';
-import {emailChanged, passwordChanged, loginUser} from '../actions';
+import {userChanged, passwordChanged, loginUser} from '../actions';
 import {connect} from 'react-redux';
 import {AsyncStorage} from 'react-native';
 
@@ -10,24 +10,24 @@ class LoginForm extends Component {
     AsyncStorage.multiGet(['user', 'password'])
     .then((value)=>{
       //User
-      value[0][1] ? this.props.emailChanged(value[0][1]) : console.log('no user');
+      value[0][1] ? this.props.userChanged(value[0][1]) : console.log('no user');
       //Password
       value[1][1] ? this.props.passwordChanged(value[1][1]) : console.log('no password');
-      const {email, password} = this.props;
+      const {username, password} = this.props;
       if(value[1][1] && value[0][1])
-      this.props.loginUser({email, password})
+      this.props.loginUser({username, password})
     });
   }
-  onEmailChange(text) {
-    this.props.emailChanged(text);
+  onUserChange(text) {
+    this.props.userChanged(text);
   }
   onPasswordChange(text) {
     this.props.passwordChanged(text);
   }
   onButtonPress() {
-    const {email, password} = this.props;
-    AsyncStorage.multiSet([['user', email], ['password', password]], (err)=>console.log(err));
-    this.props.loginUser({email, password})
+    const {username, password} = this.props;
+    AsyncStorage.multiSet([['user', username], ['password', password]], (err)=>console.log(err));
+    this.props.loginUser({username, password})
   }
   renderButton() {
     if (this.props.loading) {
@@ -43,7 +43,7 @@ class LoginForm extends Component {
     return (
       <Card>
         <CardSection>
-          <Input label="email" placeholder="email@gmail.com" value={this.props.email} onChangeText={this.onEmailChange.bind(this)}/>
+          <Input label="username" placeholder="fumeur du dimanche" value={this.props.username} onChangeText={this.onUserChange.bind(this)}/>
         </CardSection>
 
         <CardSection>
@@ -70,7 +70,7 @@ const styles = {
   }
 }
 mapStateToProps = ({auth}) => {
-  const {email, password, error, loading} = auth;
-  return {email, password, error, loading}
+  const {username, password, error, loading} = auth;
+  return {username, password, error, loading}
 };
-export default connect(mapStateToProps, {emailChanged, passwordChanged, loginUser})(LoginForm);
+export default connect(mapStateToProps, {userChanged, passwordChanged, loginUser})(LoginForm);

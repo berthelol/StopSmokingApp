@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
-import { View, Text, Image, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import styles from '../styles/SliderEntry.style';
+import {Config} from '../Config';
 
 export default class SliderEntry extends Component {
 
@@ -12,28 +13,33 @@ export default class SliderEntry extends Component {
     };*/
 
     render () {
-        const { title, subtitle, illustration, even } = this.props;
+        const { date,cigarettes } = this.props;
+        const dateformat = new Date(date);
 
-        const uppercaseTitle = title ? (
-            <Text style={[styles.title, even ? styles.titleEven : {}]} numberOfLines={2}>{ title.toUpperCase() }</Text>
-        ) : false;
         return (
             <TouchableOpacity
               activeOpacity={0.7}
               style={styles.slideInnerContainer}
-              onPress={() => { alert(`You've clicked '${title}'`); }}
+              onPress={() => { alert(`You've clicked `); }}
               >
-                <View style={[styles.imageContainer, even ? styles.imageContainerEven : {}]}>
-                    <Image
-                      source={{ uri: illustration }}
-                      //  source={require('../../images/test.jpg')}
-                      style={styles.image}
-                    />
-                    <View style={[styles.radiusMask, even ? styles.radiusMaskEven : {}]} />
+                <View style={styles.calContainer}>
+                  <Text style={styles.calTextString}>{Config.dayNames[dateformat.getDay()]}</Text>
+                  <Text style={styles.calTextNumber}>{dateformat.getDate()}</Text>
+                  <Text style={styles.calTextString}>{Config.monthNames[dateformat.getMonth()]}</Text>
                 </View>
-                <View style={[styles.textContainer, even ? styles.textContainerEven : {}]}>
-                    { uppercaseTitle }
-                    <Text style={[styles.subtitle, even ? styles.subtitleEven : {}]} numberOfLines={2}>{ subtitle }</Text>
+                <View style={styles.dataContainer}>
+                  <View style={styles.dataItemContainer}>
+                    <Text style={styles.dataItemContainerTitle} >Total dépensés</Text>
+                    <Text style={styles.subtitle} >5€</Text>
+                  </View>
+                  <View style={styles.dataItemContainer}>
+                    <Text style={styles.dataItemContainerTitle} >Total fumées</Text>
+                    <Text style={styles.subtitle} >{cigarettes.length}</Text>
+                  </View>
+                  <View style={styles.dataItemContainer}>
+                    <Text style={styles.dataItemContainerTitle} >Total vie perdue</Text>
+                    <Text style={styles.subtitle} >5 heures</Text>
+                  </View>
                 </View>
             </TouchableOpacity>
         );

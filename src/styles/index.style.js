@@ -3,11 +3,22 @@ import {StyleSheet} from 'react-native';
 export const colors = {
   black: '#1a1917',
   gray: '#888888',
-  background1: 'hsl(15, 55%, 50%)',
+//  background1: 'hsl(15, 55%, 50%)',
+  background1: '#808080',
   background2: 'hsl(230, 30%, 45%)'
 };
 
 export default StyleSheet.create({
+  header:{
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  headerGreatings:{
+    alignSelf: 'flex-start',
+    marginTop:20,
+    fontWeight: 'bold',
+    marginLeft:10
+  },
   container: {
     flex: 1,
     backgroundColor: colors.background1
@@ -52,12 +63,6 @@ export default StyleSheet.create({
   navBar: {
     backgroundColor: colors.background1
   },
-  barButtonIconStyle: {
-    width: 30,
-    height: 30,
-    alignSelf: 'flex-end',
-    marginTop: 20
-  },
   navigationBarStyle: {
     backgroundColor: '#5aa0cc',
     borderBottomColor: 'transparent',
@@ -69,22 +74,19 @@ export default StyleSheet.create({
     flex: 1,
     justifyContent: 'center'
   },
-  addCigBtnStyle:{
+  addCigBtnStyle: {
     //flex:1,
-    alignSelf:'center',
-    backgroundColor:"#FFF",
-    borderColor:"#007aff",
-    borderRadius:100,
-    borderWidth:1,
-    marginLeft:5,
-    marginRight:5,
-    padding:20,
-    paddingRight:27,
-    paddingLeft:27
+    alignSelf: 'center',
+    justifyContent: 'center'
   },
-  addCigBtnTextStyle:{
-  alignSelf:'center',
-  color:"#007aff",
-  fontSize:30
+  addCigBtnIconStyle: {
+    width: 45,
+    height: 45
+  },
+  settingsIcon:{
+      width: 30,
+      height: 30,
+      marginTop:20,
+      marginRight:15
   }
 });

@@ -1,32 +1,31 @@
-import {EMAIL_CHANGED, PASSWORD_CHANGED, LOGIN_USER_SUCCESS, LOGIN_USER_FAIL, LOGIN_USER} from './types';
+import {USERNAME_CHANGED, PASSWORD_CHANGED, LOGIN_USER_SUCCESS, LOGIN_USER_FAIL, LOGIN_USER} from './types';
 import {Actions} from 'react-native-router-flux';
 import axios from 'axios';
 import {AsyncStorage} from 'react-native';
+import {Config} from '../Config';
 
-
-export const emailChanged = (text) => {
-  return {type: EMAIL_CHANGED, payload: text}
+export const userChanged = (text) => {
+  return {type: USERNAME_CHANGED, payload: text}
 }
 
 export const passwordChanged = (text) => {
   return {type: PASSWORD_CHANGED, payload: text}
 }
 
-export const loginUser = ({email, password}) => {
+export const loginUser = ({username, password}) => {
   return (dispatch) => {
     dispatch({type: LOGIN_USER});
-
-    axios.post('https://smokingstop.herokuapp.com/authenticate/token/local', {
-      username: email,
+    axios.post(`${Config.API_URL}authenticate/token/local`, {
+      username: username,
       password: password
     }).then(function(response) {
-      console.log(response);
       if (response.status == 401) {
         loginUserFail(dispatch);
       }else {
         const {data} = response;
+        console.log(data.token);
         AsyncStorage.setItem('token', `JWT ${data.token}`);
-        loginUserSuccess(dispatch, data);
+        loginUserSuccess(dispatch, username);
       }
     }).catch(function(error) {
       loginUserFail(dispatch);
@@ -35,7 +34,6 @@ export const loginUser = ({email, password}) => {
 };
 
 const loginUserFail = (dispatch) => {
-
   dispatch({type: LOGIN_USER_FAIL});
 }
 

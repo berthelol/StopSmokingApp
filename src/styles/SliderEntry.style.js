@@ -24,14 +24,20 @@ export default StyleSheet.create({
         paddingHorizontal: itemHorizontalMargin,
         paddingBottom: 18 // needed for shadow
     },
-    imageContainer: {
+    calContainer: {
         flex: 1,
-        backgroundColor: 'white',
+        backgroundColor: '#c47c7b',
         borderTopLeftRadius: entryBorderRadius,
-        borderTopRightRadius: entryBorderRadius
+        borderTopRightRadius: entryBorderRadius,
+        justifyContent: 'center',
+        alignItems: 'center'
     },
-    imageContainerEven: {
-        backgroundColor: colors.black
+    calTextString:{
+      fontWeight: 'bold'
+    },
+    calTextNumber:{
+      fontSize:40,
+      color:'white'
     },
     image: {
         ...StyleSheet.absoluteFillObject,
@@ -49,20 +55,27 @@ export default StyleSheet.create({
         height: entryBorderRadius,
         backgroundColor: 'white'
     },
-    radiusMaskEven: {
-        backgroundColor: colors.black
-    },
-    textContainer: {
+    dataContainer: {
         justifyContent: 'center',
-        paddingTop: 20 - entryBorderRadius,
+        paddingTop: 40 - entryBorderRadius,
         paddingBottom: 20,
         paddingHorizontal: 16,
         backgroundColor: 'white',
         borderBottomLeftRadius: entryBorderRadius,
-        borderBottomRightRadius: entryBorderRadius
+        borderBottomRightRadius: entryBorderRadius,
+        flexDirection:"row"
     },
-    textContainerEven: {
-        backgroundColor: colors.black
+    dataItemContainer:{
+      justifyContent: 'center',
+      alignItems: 'center',
+      paddingRight:5,
+      paddingLeft:5
+    },
+    dataItemContainerTitle:{
+
+      color: colors.gray,
+      fontSize: 11,
+      fontWeight: 'bold'
     },
     title: {
         color: colors.black,
@@ -70,16 +83,10 @@ export default StyleSheet.create({
         fontWeight: 'bold',
         letterSpacing: 0.5
     },
-    titleEven: {
-        color: 'white'
-    },
     subtitle: {
         marginTop: 6,
         color: colors.gray,
         fontSize: 12,
         fontStyle: 'italic'
-    },
-    subtitleEven: {
-        color: 'rgba(255, 255, 255, 0.7)'
     }
 });

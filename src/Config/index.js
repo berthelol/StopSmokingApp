@@ -22,5 +22,7 @@ export const Config = {
     "Jeudi",
     "Vendredi",
     "Samedi"
-  ]
+  ],
+  lifetimePerCigarette:11,
+  package_price_default:6.5
 };

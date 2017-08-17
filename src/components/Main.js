@@ -5,15 +5,14 @@ import {
   Text,
   Image,
   TouchableOpacity,
-  Modal,
   AsyncStorage
 } from 'react-native';
 import styles from '../styles/index.style';
-import {CardSection, Button} from './common';
 import {Actions} from 'react-native-router-flux';
 import Header from './Header';
 import {connect} from 'react-redux';
 import {getAllCigarette, addCigarette} from '../actions';
+import Settings from './Settings';
 
 class Main extends Component {
   state = {
@@ -39,6 +38,9 @@ class Main extends Component {
       'modalShow': !this.state.modalShow
     });
   }
+  onExit(){
+    this.setState({modalShow:false});
+  }
   addCigarette() {
     this.props.addCigarette();
   }
@@ -53,16 +55,9 @@ class Main extends Component {
           />
         </TouchableOpacity>
         <Text style={styles.title}>Example 1</Text>
-        <Text style={styles.subtitle}>No momentum | Scale | Opacity</Text>        
+        <Text style={styles.subtitle}>No momentum | Scale | Opacity</Text>
         <MyCarousel/>
-
-        <Modal visible={this.state.modalShow} transparent animationType="fade" onRequestClose={() => {}}>
-          <View style={styles.modal}>
-            <CardSection>
-              <Button onPress={this.onLogout.bind(this)}>Logout</Button>
-            </CardSection>
-          </View>
-        </Modal>
+        <Settings visible={this.state.modalShow} onLogout={this.onLogout.bind(this)} onExit={this.onExit.bind(this)}/>
       </View>
     );
   }

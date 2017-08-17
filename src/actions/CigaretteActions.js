@@ -16,7 +16,6 @@ export const getAllCigarette=() =>{
           'Authorization': token
         }
       }).then(function(response) {
-        console.log(response.data);
         dispatch({type: CIGARETTE_FETCH_SUCCESS,payload:response.data});
       }).catch(function(error) {
         console.log(error);
@@ -33,7 +32,8 @@ export const addCigarette = () => {
     navigator.geolocation.getCurrentPosition(
         (position) => {
           var initialPosition = JSON.stringify(position);
-          AsyncStorage.getItem('token').then((token)=>{
+          AsyncStorage.multiGet(['token', 'packageprice']).then((storage)=>{
+            console.log(storage[1][1]);
             axios({
               method: 'post',
               url: `${Config.API_URL}cigarettes`,
@@ -41,11 +41,11 @@ export const addCigarette = () => {
                 time: time,
                 lat: position.coords.latitude,
                 lng: position.coords.longitude,
-                price: (9.2 / 20),
+                price: storage[1][1]==null?Config.package_price_default/20:storage[1][1]/20,
                 date: date
               },
               headers: {
-                'Authorization': token
+                'Authorization': storage[0][1]
               }
             }).then(function(response) {
               dispatch(getAllCigarette());

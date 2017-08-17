@@ -6,6 +6,8 @@ import SliderEntry from './SliderEntry';
 import styles from '../styles/index.style';
 import {connect} from 'react-redux';
 import {Spinner} from './common';
+import {AsyncStorage} from 'react-native';
+import {Config} from '../Config';
 
 class MyCarousel extends Component {
 
@@ -14,9 +16,8 @@ class MyCarousel extends Component {
     if (days=='') {
       return false;
     }
-    console.log(days);
     return days.map((day, index) => {
-      return (<SliderEntry key={`carousel-entry-${index}`} {...day}/>);
+      return (<SliderEntry timePerCigarette={Config.lifetimePerCigarette} key={`carousel-entry-${index}`} {...day}/>);
     });
   }
 
@@ -32,7 +33,7 @@ class MyCarousel extends Component {
 
   render() {
     return (
-      <ScrollView //style={styles.scrollview}}
+      <ScrollView style={styles.scrollview}
      indicatorStyle={'white'} scrollEventThrottle={200}>
      {this.showCarousel()}
       </ScrollView>

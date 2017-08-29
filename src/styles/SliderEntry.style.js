@@ -68,11 +68,10 @@ export default StyleSheet.create({
     dataItemContainer:{
       justifyContent: 'center',
       alignItems: 'center',
-      paddingRight:5,
-      paddingLeft:5
+      paddingRight:10,
+      paddingLeft:10
     },
     dataItemContainerTitle:{
-
       color: colors.gray,
       fontSize: 11,
       fontWeight: 'bold'

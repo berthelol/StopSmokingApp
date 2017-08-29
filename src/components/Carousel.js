@@ -17,7 +17,7 @@ class MyCarousel extends Component {
       return false;
     }
     return days.map((day, index) => {
-      return (<SliderEntry timePerCigarette={Config.lifetimePerCigarette} key={`carousel-entry-${index}`} {...day}/>);
+      return (<SliderEntry timePerCigarette={Config.lifetimePerCigarette} key={`carousel-entry-${index}`} {...day} />);
     });
   }
 

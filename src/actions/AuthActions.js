@@ -18,7 +18,7 @@ export const loginUser = ({username, password}) => {
     axios.post(`${Config.API_URL}authenticate/token/local`, {
       username: username,
       password: password
-    }).then(function(response) {
+    }).then(function(response) {      
       if (response.status == 401) {
         loginUserFail(dispatch);
       }else {

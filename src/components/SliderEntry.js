@@ -1,18 +1,13 @@
 import React, { Component, PropTypes } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import styles from '../styles/SliderEntry.style';
-import {Config} from '../Config';
+import {Config,format_time} from '../Config';
 import {Actions} from 'react-native-router-flux';
 
 export default class SliderEntry extends Component {
 
     goToDayDetail(){
       Actions.dayDetail({day:this.props});
-    }
-
-    format_time(time){
-      time*=this.props.timePerCigarette;
-      return ''+parseInt(time/60)+'h'+parseInt(time%60)+'m';
     }
 
     render () {
@@ -37,17 +32,17 @@ export default class SliderEntry extends Component {
                 <View style={styles.dataContainer}>
 
                   <View style={styles.dataItemContainer}>
-                    <Text style={styles.dataItemContainerTitle} >Total vie perdue</Text>
-                    <Text style={styles.subtitle} >{this.format_time(cigarette_amount)}</Text>
+                    <Text style={styles.dataItemContainerTitle} >Vie Perdue</Text>
+                    <Text style={styles.subtitle} >{format_time(cigarette_amount*this.props.timePerCigarette*60)}</Text>
                   </View>
 
                   <View style={styles.dataItemContainer}>
-                    <Text style={styles.dataItemContainerTitle} >Total fumées</Text>
-                    <Text style={styles.subtitle} >{cigarette_amount}</Text>
+                    <Text style={styles.dataItemContainerTitle} >Fumées</Text>
+                    <Text style={[styles.subtitle,{fontWeight: 'bold',fontSize:18}]} >{cigarette_amount}</Text>
                   </View>
 
                   <View style={styles.dataItemContainer}>
-                    <Text style={styles.dataItemContainerTitle} >Total dépensés</Text>
+                    <Text style={styles.dataItemContainerTitle} >Dépensé</Text>
                     <Text style={styles.subtitle} >{cigarette_amount_price.toFixed(2)}€</Text>
                   </View>
 

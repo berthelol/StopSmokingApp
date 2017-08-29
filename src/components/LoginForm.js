@@ -8,7 +8,7 @@ import {AsyncStorage} from 'react-native';
 class LoginForm extends Component {
   componentWillMount() {
     AsyncStorage.multiGet(['user', 'password'])
-    .then((value)=>{
+    .then((value)=>{    
       //User
       value[0][1] ? this.props.userChanged(value[0][1]) : console.log('no user');
       //Password

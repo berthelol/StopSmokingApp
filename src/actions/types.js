@@ -16,3 +16,14 @@ export const FETCH_CIGARETTES_FAILURE = 'fetch_cigarette_failure';
 
 export const LAST_CIGARETTE_FETCH_SUCCESS = 'last_cigarette_success';
 export const LAST_CIGARETTE_FETCH_FAILURE = 'last_cigarette_failure';
+
+export const FETCH_HOME_ADDRESS = 'fetch_home_address';
+export const FETCH_HOME_ADDRESS_SUCCESS = 'fetch_home_address_success';
+export const FETCH_HOME_ADDRESS_FAILURE = 'fetch_home_address_failure';
+export const FETCH_WORK_ADDRESS = 'fetch_work_address';
+export const FETCH_WORK_ADDRESS_SUCCESS = 'fetch_work_address_success';
+export const FETCH_WORK_ADDRESS_FAILURE = 'fetch_work_address_failure';
+export const SET_HOME_ADDRESS_SUCCESS = 'set_home_address_success';
+export const SET_HOME_ADDRESS_FAILURE = 'set_home_address_failure';
+export const SET_WORK_ADDRESS_SUCCESS = 'set_work_address_success';
+export const SET_WORK_ADDRESS_FAILURE = 'set_work_address_failure';

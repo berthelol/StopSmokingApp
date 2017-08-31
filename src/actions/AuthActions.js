@@ -18,14 +18,13 @@ export const loginUser = ({username, password}) => {
     axios.post(`${Config.API_URL}authenticate/token/local`, {
       username: username,
       password: password
-    }).then(function(response) {      
+    }).then(function(response) {
       if (response.status == 401) {
         loginUserFail(dispatch);
       }else {
         const {data} = response;
-        console.log(data.token);
         AsyncStorage.setItem('token', `JWT ${data.token}`);
-        loginUserSuccess(dispatch, username);
+        loginUserSuccess(dispatch, username,data.token);
       }
     }).catch(function(error) {
       loginUserFail(dispatch);
@@ -37,7 +36,19 @@ const loginUserFail = (dispatch) => {
   dispatch({type: LOGIN_USER_FAIL});
 }
 
-const loginUserSuccess = (dispatch, user) => {
-  dispatch({type: LOGIN_USER_SUCCESS, payload: user});
-  Actions.home();
+const loginUserSuccess = (dispatch, user,token) => {
+  axios({
+    method: 'get',
+    url: `${Config.API_URL}users/token`,
+    headers: {
+      'Authorization': 'JWT '+token
+    }
+  }).then(function(response) {
+    console.log(response.data);
+    dispatch({type: LOGIN_USER_SUCCESS, payload: response.data});
+    Actions.home();
+  }).catch(function(error) {
+    console.log(error);
+    dispatch({type: LOGIN_USER_FAIL});
+  });
 }

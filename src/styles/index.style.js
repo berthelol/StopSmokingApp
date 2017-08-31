@@ -118,6 +118,7 @@ export default StyleSheet.create({
   pickerLabel: {
     marginTop: 5,
     marginBottom: 15,
+    marginLeft:15,
     color: 'rgba(255, 255, 255, 0.75)',
     fontSize: 16,
     fontWeight:"bold"
@@ -130,7 +131,18 @@ export default StyleSheet.create({
     paddingTop:20,
     paddingBottom:20,
     justifyContent: 'flex-start',
-    flexDirection : 'row'
+    marginLeft:15
+  },
+  settingInputLabel:{
+    marginTop: 5,
+    marginBottom: 15,
+    color: 'rgba(255, 255, 255, 0.75)',
+    fontSize: 16,
+    fontWeight:"bold"
+  },
+  loadingIcon:{
+    width: 15,
+    height: 15
   },
   cigaretteDetailListView: {
     alignSelf: 'center',

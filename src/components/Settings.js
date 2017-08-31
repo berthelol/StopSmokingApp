@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
-import {AsyncStorage,Modal,View,TouchableOpacity,Image,Slider,Text} from 'react-native';
-import {Button,CardSection,Card,Input} from './common';
+import {AsyncStorage,Modal,View,TouchableOpacity,Image,Slider,Text,TextInput} from 'react-native';
+import {Spinner,Button,CardSection,Card,Input} from './common';
 import styles from '../styles/index.style';
 import {Config} from '../Config';
-//import Geocoder from 'react-native-geocoder';
+import {fetchHomeAddress,fetchWorkAddress,setHomeAddress,setWorkAddress} from '../actions';
+import {connect} from 'react-redux';
 
 class Settings extends Component {
-  state={packprice:Config.package_price_default,minute_separator:Config.minute_separator,homeAdress:"",workAddress:""};
+  state={packprice:Config.package_price_default,minute_separator:Config.minute_separator,homeAddress:this.props.user.home_address.address,workAddress:this.props.user.work_address.address};
   componentWillMount(){
     AsyncStorage.getItem('packageprice')
     .then((price)=>{
@@ -15,14 +16,6 @@ class Settings extends Component {
     AsyncStorage.getItem('minute_separator')
     .then((minute_separator)=>{
       this.setState({minute_separator:parseInt(minute_separator)});
-    });
-    AsyncStorage.getItem('homeAdress')
-    .then((homeAdress)=>{
-      this.setState({homeAdress});
-    });
-    AsyncStorage.getItem('workAddress')
-    .then((workAddress)=>{
-      this.setState({workAddress});
     });
   }
   sliderPackPriceOnValueChange (price) {
@@ -44,20 +37,102 @@ class Settings extends Component {
       : minutes;
     return hours + "h" + minutes;
   }
+  onHomeAddressCHange(homeAddress){
+     this.setState({homeAddress});
+     this.props.fetchHomeAddress(homeAddress);
+  }
+  onWorkAddressCHange(workAddress){
+     this.setState({workAddress});
+     this.props.fetchWorkAddress(workAddress);
+  }
+  renderLoadingIconHome(){
+    if(this.props.home_address_loading== null)return null;
+    if(this.props.home_address_loading==false)
+    {
+      if(this.props.home_address_success==true)
+        return (
+          <View>
+            <Image source={require('../images/checked.png')} style={styles.loadingIcon}></Image>
+            <TouchableOpacity onPress ={() => this.setState({homeAddress:this.props.home_address[0].formattedAddress})} >
+              <Text numberOfLines={1}>Suggestion:</Text>
+              <Text numberOfLines={1} >{this.props.home_address==null?"":this.props.home_address[0].formattedAddress}</Text>
+            </TouchableOpacity>
+          </View>
+        );
+      if(this.props.home_address_success==false)
+        return <Image source={require('../images/cancel.png')} style={styles.loadingIcon}></Image>
+    }
+
+    if(this.props.home_address_loading)
+    {
+      if(this.props.home_address_success==true)
+        return (
+          <View>
+            <Image source={require('../images/checked.png')} style={styles.loadingIcon}></Image>
+            <TouchableOpacity onPress ={() => this.setState({homeAddress:this.props.home_address[0].formattedAddress})} >
+              <Text numberOfLines={1}>Suggestion:</Text>
+              <Text numberOfLines={1} >{this.props.home_address==null?"":this.props.home_address[0].formattedAddress}</Text>
+            </TouchableOpacity>
+          </View>
+        );
+      if(this.props.home_address_success==false)
+        return <Image source={require('../images/cancel.png')} style={styles.loadingIcon}></Image>
+      return <Spinner size='small'/>
+    }
+  }
+  renderLoadingIconWork(){
+
+    if(this.props.work_address_loading==null) return null;
+    if(this.props.work_address_loading==false)
+    {
+      if(this.props.work_address_success==true)
+        return (
+          <View>
+            <Image source={require('../images/checked.png')} style={styles.loadingIcon}></Image>
+            <TouchableOpacity onPress ={() => this.setState({workAddress:this.props.work_address[0].formattedAddress})} >
+              <Text numberOfLines={1}>Suggestion:</Text>
+              <Text numberOfLines={1} >{this.props.work_address==null?"":this.props.work_address[0].formattedAddress}</Text>
+            </TouchableOpacity>
+          </View>
+        );
+      if(this.props.work_address_success==false)
+        return <Image source={require('../images/cancel.png')} style={styles.loadingIcon}></Image>
+    }
+
+    if(this.props.work_address_loading)
+    {
+      if(this.props.work_address_success==true)
+        return (
+          <View>
+            <Image source={require('../images/checked.png')} style={styles.loadingIcon}></Image>
+            <TouchableOpacity onPress ={() => this.setState({workAddress:this.props.work_address[0].formattedAddress})} >
+              <Text numberOfLines={1}>Suggestion:</Text>
+              <Text numberOfLines={1} >{this.props.work_address==null?"":this.props.work_address[0].formattedAddress}</Text>
+            </TouchableOpacity>
+          </View>
+        );
+      if(this.props.work_address_success==false)
+        return <Image source={require('../images/cancel.png')} style={styles.loadingIcon}></Image>
+      return <Spinner size='small'/>
+    }
+  }
   OkPush(){
-  //  Geocoder.geocodeAddress(this.state.homeAdress).then(res => {
-    //  console.log(res);
-    // res is an Array of geocoding object (see below)
-//})
-//.catch(err => console.log(err))
     AsyncStorage.setItem('packageprice', ''+this.state.packprice);
     AsyncStorage.setItem('minute_separator', ''+this.state.minute_separator);
-    AsyncStorage.setItem('homeAdress', this.state.homeAdress);
-    AsyncStorage.setItem('workAddress', this.state.workAddress);
+    if(this.props.home_address != null )
+    {
+      AsyncStorage.setItem('homeAddressCoord', this.props.home_address[0].position.lat+','+this.props.home_address[0].position.lng);
+      this.props.setHomeAddress(this.props.user.user_id,this.state.homeAddress,this.props.home_address[0].position.lat,this.props.home_address[0].position.lng);
+    }
+    if(this.props.work_address != null){
+      AsyncStorage.setItem('workAddressCoord', this.props.work_address[0].position.lat+','+this.props.work_address[0].position.lng);
+      this.props.setWorkAddress(this.props.user.user_id,this.state.workAddress,this.props.work_address[0].position.lat,this.props.work_address[0].position.lng);
+    }
     this.props.onExit();
   }
 
   render(){
+    console.log(this.props.user);
     return(
       <Modal visible={this.props.visible} transparent animationType="fade" onRequestClose={() => {}}>
         <View style={styles.modalborder}></View>
@@ -86,11 +161,15 @@ class Settings extends Component {
           </View>
           <View>
             <View style={styles.settingInput}>
-              <Input label="Adresse Maison:" placeholder="22 rue Dupond 75014" value={this.state.homeAdress} onChangeText={homeAdress => this.setState({homeAdress})}/>
-            </View>
-            <View style={styles.settingInput}>
-              <Input label="Adresse Travail:" placeholder="56 rue George 79100" value={this.state.workAddress} onChangeText={workAddress => this.setState({workAddress})}/>
-            </View>
+              <Text style={styles.settingInputLabel} numberOfLines={1}>Adresse Maison:</Text>
+              <TextInput autoCorrect={false} placeholder="22 rue Dupond 75014" value={this.state.homeAddress} onChangeText={this.onHomeAddressCHange.bind(this)} autoCapitalize = 'none' />
+              {this.renderLoadingIconHome()}
+           </View>
+           <View style={styles.settingInput}>
+             <Text style={styles.settingInputLabel} numberOfLines={1}>Adresse Travail:</Text>
+             <TextInput autoCorrect={false} placeholder="56 rue George 79100" value={this.state.workAddress} onChangeText={this.onWorkAddressCHange.bind(this)} autoCapitalize = 'none' />
+             {this.renderLoadingIconWork()}
+          </View>
           </View>
           <View>
             <TouchableOpacity onPress ={this.OkPush.bind(this)} >
@@ -101,13 +180,17 @@ class Settings extends Component {
             <Image source={require('../images/logout.png')} style={styles.logoutModal}></Image>
             <Text style={styles.logoutTextModal}>Logout</Text>
           </TouchableOpacity>
-
           </View>
-
         <View style={styles.modalborder}></View>
       </Modal>
     );
   }
 }
 
-export default Settings;
+mapStateToProps = (state) => {
+  const {home_address_loading,home_address,home_address_success,work_address_loading,work_address,work_address_success} = state.settings;
+  const {user} = state.auth;
+  return {user,home_address_loading,home_address,home_address_success,work_address_loading,work_address,work_address_success};
+}
+
+export default connect(mapStateToProps,{fetchHomeAddress,fetchWorkAddress,setHomeAddress,setWorkAddress})(Settings);

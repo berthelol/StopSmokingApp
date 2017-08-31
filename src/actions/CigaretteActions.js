@@ -25,17 +25,14 @@ export const fetchDays = () => {
 }
 
 export const addCigarette = () => {
-  console.log("toto");
   return (dispatch) => {
     dispatch({type: ADD_CIGARETTE});
     const d = new Date();
     const time = d.getMinutes() * 60 + d.getHours() * 3600;
     const date = ("0" + (d.getMonth() + 1).toString()).substr(-2) + "/" + ("0" + d.getDate().toString()).substr(-2) + "/" + (d.getFullYear().toString()).substr(2);
-    navigator.geolocation.getCurrentPosition((position) => {
-      var initialPosition = JSON.stringify(position);
-      alert(initialPosition);
+    navigator.geolocation.getCurrentPosition((position) =>
+    {
       AsyncStorage.multiGet(['token', 'packageprice']).then((storage) => {
-        console.log(storage[1][1]);
         axios({
           method: 'post',
           url: `${Config.API_URL}cigarettes`,
@@ -63,10 +60,6 @@ export const addCigarette = () => {
     }, (error) => {
       dispatch({type: ADD_CIGARETTE_FAILURE});
       console.log(error.message);
-    }, {
-      enableHighAccuracy: true,
-      timeout: 20000,
-      maximumAge: 1000
     });
   }
 };

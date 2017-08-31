@@ -75,7 +75,7 @@ class Main extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Header username={this.props.user} onModalShow={this.onModalShow.bind(this)}/>
+        <Header username={this.props.user.username} onModalShow={this.onModalShow.bind(this)}/>
         {this.renderAddCigarette()}
         <Text style={styles.title}>Dernière fumée:</Text>
         {this.renderLastCigarette(this.props.last)}

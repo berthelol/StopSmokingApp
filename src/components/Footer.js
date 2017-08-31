@@ -32,22 +32,20 @@ class Header extends Component {
     if(this.props.days=='') return <View></View>
     return (
       <View style={styles.footerContainer}>
-
         <View>
           <Text style={styles.footerTitle} >Total vie perdue</Text>
           <Text style={styles.subtitle} >{this.renderTotalLifeLost()}</Text>
         </View>
 
         <View>
-          <Text style={styles.footerTitle} >Total fumées</Text>
-          <Text style={styles.subtitle} >{this.renderTotalCigarettesSmoked()}</Text>
+          <Text style={[styles.footerTitle,{fontSize:14}]} >Total fumées</Text>
+          <Text style={[styles.subtitle,{fontSize:20}]} >{this.renderTotalCigarettesSmoked()}</Text>
         </View>
 
         <View>
           <Text style={styles.footerTitle} >Total dépensés</Text>
           <Text style={styles.subtitle} >{this.renderTotalPrice()}€</Text>
         </View>
-
       </View>
     );
   }

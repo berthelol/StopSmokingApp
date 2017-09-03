@@ -1,8 +1,11 @@
 export const USERNAME_CHANGED = 'username_change';
 export const PASSWORD_CHANGED = 'password_change';
+export const HOME_ADDRESS_CHANGED = 'home_address_changed';
+export const WORK_ADDRESS_CHANGED = 'work_address_changed';
 export const LOGIN_USER_SUCCESS = 'login_user_success';
 export const LOGIN_USER_FAIL = 'login_user_fail';
 export const LOGIN_USER = 'login_user';
+export const REGISTER_USER = 'register_user';
 
 export const ADD_CIGARETTE = 'add_cigarette';
 export const ADD_CIGARETTE_FAILURE = 'add_cigarette_failure';

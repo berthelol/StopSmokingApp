@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { ScrollView,Platform} from 'react-native';
+import { ScrollView,Platform,View} from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 import {sliderWidth, itemWidth} from '../styles/SliderEntry.style';
 import SliderEntry from './SliderEntry';
@@ -32,6 +32,7 @@ class MyCarousel extends Component {
   }
 
   render() {
+    if(this.props.days.length==0)return <View></View>
     return (
       <ScrollView style={styles.scrollview}
      indicatorStyle={'white'} scrollEventThrottle={200}>

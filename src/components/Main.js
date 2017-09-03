@@ -35,7 +35,8 @@ class Main extends Component {
       [
         'user', ""
       ],
-      ['password', ""]
+      ['password', ""],
+      ['token','']
     ], (err) => console.log(err));
     Actions.auth();
     this.setState({
@@ -53,6 +54,8 @@ class Main extends Component {
     {
       return <Spinner />
     }
+    if(last_cigarette==null)
+      return <Text style={styles.title}> Appuyez sur la cigarette à chaque fois que vous en fumez une</Text>
     return <Text style={styles.subtitle}>{format_time(last_cigarette.time)}</Text>;
   }
   renderAddCigarette(){
@@ -77,7 +80,7 @@ class Main extends Component {
       <View style={styles.container}>
         <Header username={this.props.user.username} onModalShow={this.onModalShow.bind(this)}/>
         {this.renderAddCigarette()}
-        <Text style={styles.title}>Dernière fumée:</Text>
+        <Text style={[styles.title,this.props.last==null?{display: 'none'}:{}]}>Dernière fumée:</Text>
         {this.renderLastCigarette(this.props.last)}
         <MyCarousel/>
         <Footer />

@@ -15,6 +15,7 @@ export const fetchDays = () => {
           'Authorization': token
         }
       }).then(function(response) {
+        console.log(response.data);
         dispatch({type: CIGARETTE_FETCH_SUCCESS, payload: response.data});
       }).catch(function(error) {
         console.log(error);
@@ -64,7 +65,7 @@ export const addCigarette = () => {
   }
 };
 
-  export const fetchCigarettes = () => {
+  /*export const fetchCigarettes = () => {
     return (dispatch) => {
       AsyncStorage.itemGet('token').then((token) => {
         axios({
@@ -74,13 +75,14 @@ export const addCigarette = () => {
             'Authorization': token
           }
         }).then(function(response) {
+          console.log(response.data);
           dispatch({type: FETCH_CIGARETTES_SUCCESS, payload: reponse.data});
         }).catch(function(error) {
           dispatch({type: FETCH_CIGARETTES_FAILURE});
         });
       });
     };
-  };
+  };*/
 
   export const fetchLastCigarette = () => {
     return (dispatch) => {
@@ -93,6 +95,7 @@ export const addCigarette = () => {
             'Authorization': token
           }
         }).then(function(response) {
+          console.log(response.data);
           dispatch({type: LAST_CIGARETTE_FETCH_SUCCESS, payload: response.data});
         }).catch(function(error) {
           console.log(error);

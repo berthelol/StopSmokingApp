@@ -11,7 +11,7 @@ class Header extends Component{
   render(){
     return(
     <View style={styles.header}>
-      <Text onPress={this.removeAllCache} style={styles.headerGreatings}>Hello {this.props.username}</Text>
+      <Text onPress={this.removeAllCache} style={[styles.title,styles.headerGreatings,{fontSize: 17}]}>Hello {this.props.username}</Text>
       <TouchableOpacity onPress={this.props.onModalShow}>
         <Image
           source={require('../images/settings.png')}

@@ -16,11 +16,11 @@ import {Config} from '../Config';
 import axios from 'axios';
 
 export const fetchHomeAddress = (home_address) => {
+  console.log(home_address);
   return (dispatch) => {
     dispatch({type: FETCH_HOME_ADDRESS});
 
     Geocoder.geocodeAddress(home_address).then(res => {
-      //TODO Stoc db sous collecion user
       dispatch({type: FETCH_HOME_ADDRESS_SUCCESS, payload: res});
     }).catch(err => {
       dispatch({type: FETCH_HOME_ADDRESS_FAILURE});
@@ -33,7 +33,6 @@ export const fetchWorkAddress = (work_address) => {
   return (dispatch) => {
     dispatch({type: FETCH_WORK_ADDRESS});
     Geocoder.geocodeAddress(work_address).then(res => {
-      //TODO Stoc db sous collecion user
       dispatch({type: FETCH_WORK_ADDRESS_SUCCESS, payload: res});
     }).catch(err => {
       dispatch({type: FETCH_WORK_ADDRESS_FAILURE});
@@ -95,7 +94,7 @@ export const setWorkAddress = (id, work_address, lat, lng) => {
           payload: {
               address: work_address,
               lat: lat,
-              lng: lng            
+              lng: lng
           }
         });
       }).catch(function(error) {

@@ -3,22 +3,13 @@ import {StyleSheet} from 'react-native';
 export const colors = {
   black: '#1a1917',
   gray: '#888888',
-  //  background1: 'hsl(15, 55%, 50%)',
+  background1: 'hsl(15, 55%, 50%)',
   background1: '#808080',
   background2: 'hsl(230, 30%, 45%)'
 };
 
 export default StyleSheet.create({
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between'
-  },
-  headerGreatings: {
-    alignSelf: 'flex-start',
-    marginTop: 20,
-    fontWeight: 'bold',
-    marginLeft: 10
-  },
+  //Common
   container: {
     flex: 1,
     backgroundColor: colors.background1
@@ -56,6 +47,49 @@ export default StyleSheet.create({
     fontStyle: 'italic',
     textAlign: 'center'
   },
+  //Login & registration
+  loginTitle: {
+    paddingTop: 10,
+    paddingBottom: 10,
+    fontSize: 22,
+    fontWeight: 'bold',
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontStyle: 'italic'
+  },
+  errorTextStyle: {
+    fontSize: 20,
+    color: 'red',
+    alignSelf: 'center'
+  },
+  loginSeparator: {
+    marginTop: 75,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 1
+  },
+  loginSeparatorText: {
+    fontSize: 20,
+    fontWeight: 'bold'
+  },
+  //Header
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  headerGreatings: {
+    alignSelf: 'flex-start',
+    marginTop: 20,
+    fontWeight: 'bold',
+    marginLeft: 10
+  },
+  settingsIcon: {
+    width: 30,
+    height: 30,
+    marginTop: 20,
+    marginRight: 15
+  },
+  //Body
   slider: {
     marginBottom: 30
   },
@@ -68,118 +102,144 @@ export default StyleSheet.create({
     borderBottomColor: 'transparent',
     borderBottomWidth: 65
   },
-  modalborder: {
-    backgroundColor: 'rgba(0,0,0,0.75)',
-    position: 'relative',
-    //flex: 1,
-    height:100
-  },
-  modalcenter: {
-    backgroundColor: 'rgba(127,127,127,0.80)',
-    paddingBottom:15
-  },
   addCigBtnStyle: {
     //flex:1,
     alignSelf: 'center',
     justifyContent: 'center',
-    marginTop:10
+    marginTop: 10
   },
   addCigBtnIconStyle: {
     width: 45,
     height: 45
   },
-  settingsIcon: {
-    width: 30,
-    height: 30,
-    marginTop: 20,
-    marginRight: 15
+  //Settings
+  modalborder: {
+    backgroundColor: 'rgba(0,0,0,0.75)',
+    position: 'relative',
+    flex: 1
+  },
+  modalcenter: {
+    backgroundColor: 'rgba(127,127,127,0.80)',
+    flex: 5,
+    borderRadius: 16,
+    borderWidth: 1,
+    overflow: 'hidden'
+  },
+  saveButton: {
+    marginRight: 60,
+    marginLeft: 60,
+    marginTop: 10,
+    paddingTop: 10,
+    paddingBottom: 10,
+    backgroundColor: '#68a0cf',
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#fff'
+  },
+  saveButtonText: {
+    color: '#fff',
+    textAlign: 'center',
+    fontSize: 20
   },
   deleteModal: {
-    width: 15,
-    height: 15,
+    width: 20,
+    height: 20,
     alignSelf: 'flex-end',
     marginRight: 10,
-    marginTop:10
+    marginTop: 20
   },
-  logoutContainerModal:{
+  logoutContainerModal: {
     alignSelf: 'flex-end',
     alignItems: 'center',
     marginRight: 10
   },
-  logoutModal:{
+  logoutModal: {
     width: 30,
     height: 30,
     alignItems: 'center',
+    marginTop:10
   },
-  logoutTextModal:{
-    color:'#AB0926',
-    alignItems: 'center',
+  logoutTextModal: {
+    color: '#AB0926',
+    alignItems: 'center'
   },
   pickerLabel: {
     marginTop: 5,
     marginBottom: 15,
-    marginLeft:15,
+    marginLeft: 15,
     color: 'rgba(255, 255, 255, 0.75)',
     fontSize: 16,
-    fontWeight:"bold"
+    fontWeight: "bold"
   },
   picker: {
     marginRight: 20,
     marginLeft: 20
   },
-  settingInput:{
-    paddingTop:20,
-    paddingBottom:20,
+  settingInput: {
+    paddingTop: 15,
+    paddingBottom: 20,
     justifyContent: 'flex-start',
-    marginLeft:15
+    marginLeft: 15
   },
-  settingInputLabel:{
+  settingInputLabel: {
     marginTop: 5,
-    marginBottom: 15,
+    marginBottom: 5,
     color: 'rgba(255, 255, 255, 0.75)',
     fontSize: 16,
-    fontWeight:"bold"
+    fontWeight: "bold"
   },
-  loadingIcon:{
+  settingInputText:{
+    color:'rgba(255, 255, 255, 0.85)'
+  },
+  infoBoxTextinput:{
+    color: '#3e4347',
+    marginTop:10,
+    fontSize:12
+  },
+  loadingIcon: {
     width: 15,
-    height: 15
+    height: 15,
+    alignSelf:'center',
+    marginTop:10
   },
+  //Day Detail
   cigaretteDetailListView: {
     alignSelf: 'center',
     height: 150,
     marginTop: 20,
-    width:200
+    width: 200
   },
-  cigaretteDetailListViewItem:{
+  cigaretteDetailListViewItem: {
     flexDirection: 'row',
     justifyContent: 'space-around'
   },
-  cigaretteDetailListViewItemText:{
+  cigaretteDetailListViewItemText: {
     alignSelf: 'center',
-    width:80,
-    paddingLeft:10,
-    paddingRight:10
+    width: 80,
+    paddingLeft: 10,
+    paddingRight: 10
   },
   separator: {
     flex: 1,
     height: StyleSheet.hairlineWidth,
-    backgroundColor: '#8E8E8E',
+    backgroundColor: '#8E8E8E'
   },
   map: {
-    marginTop:25,
+    marginTop: 25,
     height: 400,
     width: 400,
     justifyContent: 'flex-end',
     alignItems: 'center'
   },
-  footerContainer:{
-    marginBottom:100,
+  //Footer
+  footerContainer: {
+    marginBottom: 100,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingLeft:15,
-    paddingRight:15
+    paddingLeft: 15,
+    paddingRight: 15
   },
-  footerTitle:{
+  footerTitle: {
     color: 'white',
     fontSize: 11,
     fontWeight: 'bold'

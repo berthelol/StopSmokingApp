@@ -29,7 +29,7 @@ class Header extends Component {
     return cigarettePrice.toFixed(2);
   }
   render(){
-    if(this.props.days=='') return <View></View>
+    if(this.props.days==''||this.props.days.length==0) return <View></View>    
     return (
       <View style={styles.footerContainer}>
         <View>

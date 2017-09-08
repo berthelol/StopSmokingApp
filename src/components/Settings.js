@@ -71,9 +71,7 @@ class Settings extends Component {
             <Image source={require('../images/checked.png')} style={styles.loadingIcon}></Image>
             <TouchableOpacity onPress ={() => this.setState({homeAddress: this.props.home_address[0].formattedAddress})}>
               <Text numberOfLines={1}>Suggestion:</Text>
-              <Text numberOfLines={1}>{this.props.home_address == null
-                  ? ""
-                  : this.props.home_address[0].formattedAddress}</Text>
+              <Text numberOfLines={1}>{this.props.home_address == null ? "" : this.props.home_address[0].formattedAddress}</Text>
               <Text numberOfLines={1} style={styles.infoBoxTextinput}>Cliquer pour appliquer</Text>
             </TouchableOpacity>
           </View>
@@ -89,9 +87,7 @@ class Settings extends Component {
             <Image source={require('../images/checked.png')} style={styles.loadingIcon}></Image>
             <TouchableOpacity onPress ={() => this.setState({homeAddress: this.props.home_address[0].formattedAddress})}>
               <Text numberOfLines={1}>Suggestion:</Text>
-              <Text numberOfLines={1}>{this.props.home_address == null
-                  ? ""
-                  : this.props.home_address[0].formattedAddress}</Text>
+              <Text numberOfLines={1}>{this.props.home_address == null ? "" : this.props.home_address[0].formattedAddress}</Text>
               <Text numberOfLines={1} style={styles.infoBoxTextinput}>Cliquer pour appliquer</Text>
             </TouchableOpacity>
           </View>
@@ -112,9 +108,7 @@ class Settings extends Component {
             <Image source={require('../images/checked.png')} style={styles.loadingIcon}></Image>
             <TouchableOpacity onPress ={() => this.setState({workAddress: this.props.work_address[0].formattedAddress})}>
               <Text numberOfLines={1}>Suggestion:</Text>
-              <Text numberOfLines={1}>{this.props.work_address == null
-                  ? ""
-                  : this.props.work_address[0].formattedAddress}</Text>
+              <Text numberOfLines={1}>{this.props.work_address == null  ? ""  : this.props.work_address[0].formattedAddress}</Text>
               <Text numberOfLines={1} style={styles.infoBoxTextinput}>Cliquer pour appliquer</Text>
             </TouchableOpacity>
           </View>
@@ -130,9 +124,7 @@ class Settings extends Component {
             <Image source={require('../images/checked.png')} style={styles.loadingIcon}></Image>
             <TouchableOpacity onPress ={() => this.setState({workAddress: this.props.work_address[0].formattedAddress})}>
               <Text numberOfLines={1}>Suggestion:</Text>
-              <Text numberOfLines={1}>{this.props.work_address == null
-                  ? ""
-                  : this.props.work_address[0].formattedAddress}</Text>
+              <Text numberOfLines={1}>{this.props.work_address == null ? ""  : this.props.work_address[0].formattedAddress}</Text>
               <Text numberOfLines={1} style={styles.infoBoxTextinput}>Cliquer pour appliquer</Text>
             </TouchableOpacity>
           </View>
@@ -153,38 +145,35 @@ class Settings extends Component {
       AsyncStorage.setItem('workAddressCoord', this.props.work_address[0].position.lat + ',' + this.props.work_address[0].position.lng);
       this.props.setWorkAddress(this.props.user.user_id, this.state.workAddress, this.props.work_address[0].position.lat, this.props.work_address[0].position.lng);
     }
+    this.props.onMinuteSeparatorChange(this.state.minute_separator);
     this.props.onExit();
   }
 
   render() {
     return (
-      <Modal style={{
-        flex: 1,
-        overflow: 'hidden'
-      }} visible={this.props.visible} transparent animationType="fade" onRequestClose={() => {}}>
-
+      <Modal style={{flex: 1,  overflow: 'hidden'}} visible={this.props.visible} transparent animationType="fade" onRequestClose={() => {}}>
         <View style={styles.modalcenter}>
           <TouchableOpacity onPress={this.props.onExit}>
             <Image source={require('../images/delete.png')} style={styles.deleteModal}></Image>
           </TouchableOpacity>
           <View>
-            <Text style={styles.pickerLabel}>Prix d'un paquet: {this.state.packprice}
-              €</Text>
+            <Text style={styles.pickerLabel}>Prix d'un paquet: {this.state.packprice} €</Text>
             <Slider style={styles.picker} value={this.state.packprice} step={0.1} onValueChange={this.sliderPackPriceOnValueChange.bind(this)} maximumValue={15}/>
           </View>
           <View>
-            <Text style={styles.pickerLabel}>Temps entre chaque cigarette: {this.convertNumberToTime(this.state.minute_separator * 60)}
-              m</Text>
+            <Text style={styles.pickerLabel}>Temps entre chaque cigarette: {this.convertNumberToTime(this.state.minute_separator * 60)} m</Text>
             <Slider style={styles.picker} value={this.state.minute_separator} step={10} onValueChange={this.sliderMinuteSeparatorOnValueChange.bind(this)} maximumValue={300} minimumValue={30}/>
           </View>
           <View>
             <View style={styles.settingInput}>
               <Text style={styles.settingInputLabel} numberOfLines={1}>Adresse Maison:</Text>
-              <TextInput style={styles.settingInputText} autoCorrect={false} placeholder="22 rue Dupond 75014" value={this.state.homeAddress} onChangeText={this.onHomeAddressCHange.bind(this)} autoCapitalize='none'/> {this.renderLoadingIconHome()}
+              <TextInput style={styles.settingInputText} autoCorrect={false} placeholder="22 rue Dupond 75014" value={this.state.homeAddress} onChangeText={this.onHomeAddressCHange.bind(this)} autoCapitalize='none'/>
+               {this.renderLoadingIconHome()}
             </View>
             <View style={styles.settingInput}>
               <Text style={styles.settingInputLabel} numberOfLines={1}>Adresse Travail:</Text>
-              <TextInput style={styles.settingInputText} autoCorrect={false} placeholder="56 rue George 79100" value={this.state.workAddress} onChangeText={this.onWorkAddressCHange.bind(this)} autoCapitalize='none'/> {this.renderLoadingIconWork()}
+              <TextInput style={styles.settingInputText} autoCorrect={false} placeholder="56 rue George 79100" value={this.state.workAddress} onChangeText={this.onWorkAddressCHange.bind(this)} autoCapitalize='none'/>
+              {this.renderLoadingIconWork()}
             </View>
           </View>
           <View>

@@ -15,8 +15,7 @@ import Geocoder from 'react-native-geocoder';
 import {Config} from '../Config';
 import axios from 'axios';
 
-export const fetchHomeAddress = (home_address) => {
-  console.log(home_address);
+export const fetchHomeAddress = (home_address) => {  
   return (dispatch) => {
     dispatch({type: FETCH_HOME_ADDRESS});
 

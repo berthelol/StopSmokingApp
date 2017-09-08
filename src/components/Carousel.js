@@ -24,7 +24,7 @@ class MyCarousel extends Component {
   showCarousel(){
     const {days} = this.props;
     if (days=='') {
-      return <Spinner size={Platform.OS === 'ios'?'large':125} style={{marginTop:50}} />;
+      return <Spinner size='large' style={{marginTop:50}} />;
     }
     return <Carousel sliderWidth={sliderWidth} itemWidth={itemWidth} firstItem={days.length-1} inactiveSlideScale={0.94} inactiveSlideOpacity={0.6} enableMomentum={false} containerCustomStyle={styles.slider} contentContainerCustomStyle={styles.sliderContainer} showsHorizontalScrollIndicator={false} snapOnAndroid={true} removeClippedSubviews={false}>
       {this.getSlides()}
@@ -32,17 +32,19 @@ class MyCarousel extends Component {
   }
 
   render() {
-    if(this.props.days.length==0)return <View></View>
     return (
-      <ScrollView style={styles.scrollview}
-     indicatorStyle={'white'} scrollEventThrottle={200}>
-     {this.showCarousel()}
-      </ScrollView>
+      <View style={styles.scrollview}>
+        <ScrollView scrollEnabled={ false }
+       indicatorStyle={'white'} scrollEventThrottle={200}>
+       {this.showCarousel()}
+        </ScrollView>
+      </View>
     );
   }
 }
 mapStateToProps = (state) => {
   const {days} = state.cigarette;
+  const {firstlog} = state.auth;
   return {days};
 }
 

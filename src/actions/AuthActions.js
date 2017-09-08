@@ -1,4 +1,4 @@
-import {USERNAME_CHANGED, PASSWORD_CHANGED, HOME_ADDRESS_CHANGED, WORK_ADDRESS_CHANGED, LOGIN_USER_SUCCESS, LOGIN_USER_FAIL, LOGIN_USER,REGISTER_USER} from './types';
+import {USERNAME_CHANGED, PASSWORD_CHANGED, HOME_ADDRESS_CHANGED, WORK_ADDRESS_CHANGED, LOGIN_USER_SUCCESS, LOGIN_USER_FAIL, LOGIN_USER,REGISTER_USER, REGISTER_BEGIN,USER_ALREADY_EXIST} from './types';
 import {Actions} from 'react-native-router-flux';
 import axios from 'axios';
 import {AsyncStorage} from 'react-native';
@@ -23,29 +23,37 @@ export const onWorkAddressChange = (text) => {
 export const registerUser = (username,password, homeAddress,workAddress) => {
   return(dispatch)=>{
     dispatch({type:REGISTER_USER});
-    axios.post(`${Config.API_URL}users`, {
-      username: username,
-      password: password,
-      home_address: {
-        address: typeof homeAddress== 'string' ?homeAddress:homeAddress.formattedAddress,
-        lat: typeof homeAddress=='string'?0:homeAddress.position.lat,
-        lng: typeof homeAddress=='string'?0:homeAddress.position.lng
+    axios({
+      method: 'post',
+      url: `${Config.API_URL}users`,
+      data: {
+          username: username,
+          password: password,
+          home_address: {
+            address: typeof homeAddress== 'string' ?homeAddress:homeAddress.formattedAddress,
+            lat: typeof homeAddress=='string'?0:homeAddress.position.lat,
+            lng: typeof homeAddress=='string'?0:homeAddress.position.lng
+          },
+          work_address: {
+            address: typeof workAddress=='string'?workAddress:workAddress.formattedAddress,
+            lat: typeof workAddress=='string'?0:workAddress.position.lat,
+            lng: typeof workAddress=='string'?0:workAddress.position.lng
+          }
       },
-      work_address: {
-        address: typeof workAddress=='string'?workAddress:workAddress.formattedAddress,
-        lat: typeof workAddress=='string'?0:workAddress.position.lat,
-        lng: typeof workAddress=='string'?0:workAddress.position.lng
-      }
+      validateStatus: function (status) {
+      return status >= 200 && status < 410; // default
+    }
     }).then(function(response) {
-      if (response.status!==200) {
+        if (response.status!==200&&response.status!==409) {
+          loginUserFail(dispatch);
+        }else if(response.status==409) {
+          dispatch({type: USER_ALREADY_EXIST});
+        }else{
+          Actions.login({afterRegister:true});
+        }
+      }).catch(error => {
         loginUserFail(dispatch);
-      }else {
-        Actions.login({afterRegister:true});
-      }
-    }).catch(function(error) {
-      console.log(error);
-      loginUserFail(dispatch);
-    });
+      });
   }
 }
 
@@ -75,6 +83,10 @@ export const loginUser = ({username, password}) => {
     });
   };
 };
+
+export const inscriptionBegin = () =>{
+  return {type:REGISTER_BEGIN}
+}
 
 const loginUserFail = (dispatch) => {
   dispatch({type: LOGIN_USER_FAIL});

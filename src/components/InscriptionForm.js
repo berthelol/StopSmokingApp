@@ -3,12 +3,12 @@ import {Text,View,Image,TouchableOpacity} from 'react-native';
 import {connect} from 'react-redux';
 import styles from '../styles/index.style';
 import {Card, CardSection, Input, Button, Spinner} from './common';
-import {registerUser,userChanged, passwordChanged,fetchHomeAddress,fetchWorkAddress} from '../actions';
+import {inscriptionBegin,registerUser,userChanged, passwordChanged,fetchHomeAddress,fetchWorkAddress} from '../actions';
 
 class InscriptionForm extends Component {
   state={homeAddress:'',workAddress:''};
   componentWillMount() {
-
+    this.props.inscriptionBegin();
   }
 
   onUserChange(text) {
@@ -31,7 +31,6 @@ class InscriptionForm extends Component {
 
   onButtonPress() {
     const {username,password} = this.props;
-    console.log(this.props, this.state);
     this.props.registerUser(username ,password,this.props.home_address==null?this.state.homeAddress:this.props.home_address[0],this.props.work_address==null?this.state.workAddress:this.props.work_address[0]);
   }
   renderLoadingIconHome(){
@@ -155,4 +154,4 @@ mapStateToProps = (state) => {
   return {username, password, error, loading,home_address_loading,home_address,home_address_success,work_address_loading,work_address,work_address_success}
 };
 
-export default connect(mapStateToProps, {registerUser,userChanged, passwordChanged,fetchHomeAddress,fetchWorkAddress})(InscriptionForm);
+export default connect(mapStateToProps, {inscriptionBegin,registerUser,userChanged, passwordChanged,fetchHomeAddress,fetchWorkAddress})(InscriptionForm);

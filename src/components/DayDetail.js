@@ -12,7 +12,8 @@ export default class DayDetail extends Component {
   }
   componentWillMount() {
     AsyncStorage.getItem('minute_separator').then((minute_separator) => {
-      this.setState({minute_separator: parseInt(minute_separator)});
+      if(minute_separator!=null)
+        this.setState({minute_separator: parseInt(minute_separator)});
     });
     this.createDataSource(this.props.day);
   }
@@ -80,7 +81,6 @@ export default class DayDetail extends Component {
 
     const time_difference = (actual.time - previous.time) / 60;
     const variance = time_difference - this.state.minute_separator;
-
     if (variance > 0) {
       return <Text style={[styles.cigaretteDetailListViewItemText,{
         color: 'green'
@@ -111,12 +111,17 @@ export default class DayDetail extends Component {
       </View>
     )
   }
+  renderDate(){
+    const date = new Date(this.props.day.date);
+    return `${Config.dayNames[date.getDay()]} ${date.getDate()} ${Config.monthNames[date.getMonth()]}`;
+  }
 
   render() {
-    const {date} = this.props.day;
     return (
       <View>
+        <Text style={styles.dayDetailDateHeader} >{this.renderDate()}</Text>
         <ListView enableEmptySections dataSource={this.dataSource} renderRow={this.renderRow.bind(this)} style={styles.cigaretteDetailListView} renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator}/>}/>
+        
         {/* <MapView style={styles.map} initialRegion={this.state.currentRegion} showsUserLocation={true}>
           {this.state.markers.map(marker => (<MapView.Marker key={marker.id} coordinate={marker.latlng} title={marker.title} description={marker.description}/>))}
         </MapView> */}

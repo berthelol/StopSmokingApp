@@ -28,7 +28,7 @@ export default StyleSheet.create({
   },
   scrollview: {
     flex: 1,
-    paddingTop: 20
+    marginTop: 20
   },
   title: {
     marginTop: 15,
@@ -55,7 +55,7 @@ export default StyleSheet.create({
     fontWeight: 'bold',
     justifyContent: 'center',
     alignItems: 'center',
-    fontStyle: 'italic'
+    //fontStyle: 'italic'
   },
   errorTextStyle: {
     fontSize: 20,
@@ -89,6 +89,19 @@ export default StyleSheet.create({
     marginTop: 20,
     marginRight: 15
   },
+  cigaretteOffsetTextOutput:{
+    marginTop: 5,
+    marginBottom: 10,
+    backgroundColor: 'transparent',
+    color: 'rgba(255, 255, 255, 0.75)',
+    fontSize: 16,
+    fontStyle: 'italic',
+    textAlign: 'center'
+  },
+  cigaretteOffsetSlider:{
+    marginLeft:50,
+    marginRight:50
+  },
   //Body
   slider: {
     marginBottom: 30
@@ -110,7 +123,14 @@ export default StyleSheet.create({
   },
   addCigBtnIconStyle: {
     width: 45,
-    height: 45
+    height: 45,
+  },
+  lungsIcon:{
+    width: 20,
+    height: 20,
+    alignSelf: 'center',
+    justifyContent: 'center',
+    marginTop:10
   },
   //Settings
   modalborder: {
@@ -121,7 +141,7 @@ export default StyleSheet.create({
   modalcenter: {
     backgroundColor: 'rgba(127,127,127,0.80)',
     flex: 5,
-    borderRadius: 16,
+  //  borderRadius: 16,
     borderWidth: 1,
     overflow: 'hidden'
   },
@@ -203,6 +223,14 @@ export default StyleSheet.create({
     marginTop:10
   },
   //Day Detail
+  dayDetailDateHeader:{
+    marginTop: 15,
+    backgroundColor: 'transparent',
+    color: 'rgba(127,127,127,0.90)',
+    fontSize: 22,
+    fontWeight: 'bold',
+    textAlign: 'center'
+  },
   cigaretteDetailListView: {
     alignSelf: 'center',
     height: 150,
@@ -211,7 +239,8 @@ export default StyleSheet.create({
   },
   cigaretteDetailListViewItem: {
     flexDirection: 'row',
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
+    flex:1
   },
   cigaretteDetailListViewItemText: {
     alignSelf: 'center',
@@ -233,11 +262,12 @@ export default StyleSheet.create({
   },
   //Footer
   footerContainer: {
-    marginBottom: 100,
+    //marginBottom: 100,
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingLeft: 15,
-    paddingRight: 15
+    paddingRight: 15,
+    flex:0.5
   },
   footerTitle: {
     color: 'white',

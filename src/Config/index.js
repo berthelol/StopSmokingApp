@@ -1,6 +1,7 @@
 export const Config = {
-  API_URL: 'https://smokingstop.herokuapp.com/',
+  //API_URL: 'https://smokingstop.herokuapp.com/',
   //API_URL:'http://localhost:3000/',
+  API_URL:'http://77.201.202.226/',
   monthNames: [
     "Janvier",
     "Fevrier",

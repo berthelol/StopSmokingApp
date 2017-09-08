@@ -9,10 +9,11 @@ import Reactotron from 'reactotron-react-native';
 console.ignoredYellowBox = [
     'Setting a timer'
 ];
+const store = Reactotron.createStore(reducers,{},applyMiddleware(ReduxThunk));
 
 class App extends Component {
+
   render() {
-    const store = Reactotron.createStore(reducers,{},applyMiddleware(ReduxThunk));
     return (
       <Provider store={store}>
         <Router />

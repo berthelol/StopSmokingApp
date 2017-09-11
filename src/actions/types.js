@@ -17,6 +17,8 @@ export const CIGARETTE_FETCH_SUCCESS ='cigarette_fetch_success';
 export const CIGARETTE_FETCH_FAILURE ='cigarette_fetch_failure';
 export const FETCH_CIGARETTES_SUCCESS = 'fetch_cigarette_success';
 export const FETCH_CIGARETTES_FAILURE = 'fetch_cigarette_failure';
+export const CIGARETTE_DELETE_SUCCESS = 'cigarette_delete_success';
+export const CIGARETTE_DELETE_FAILURE = 'cigarette_delete_failure';
 
 export const LAST_CIGARETTE_FETCH_SUCCESS = 'last_cigarette_success';
 export const LAST_CIGARETTE_FETCH_FAILURE = 'last_cigarette_failure';

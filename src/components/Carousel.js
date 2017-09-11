@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { ScrollView,Platform,View} from 'react-native';
 import Carousel from 'react-native-snap-carousel';
-import {sliderWidth, itemWidth} from '../styles/SliderEntry.style';
+import {sliderWidth, slideHeight,itemWidth} from '../styles/SliderEntry.style';
 import SliderEntry from './SliderEntry';
 import styles from '../styles/index.style';
 import {connect} from 'react-redux';
@@ -33,12 +33,10 @@ class MyCarousel extends Component {
 
   render() {
     return (
-      <View style={styles.scrollview}>
         <ScrollView scrollEnabled={ false }
        indicatorStyle={'white'} scrollEventThrottle={200}>
        {this.showCarousel()}
-        </ScrollView>
-      </View>
+        </ScrollView>    
     );
   }
 }

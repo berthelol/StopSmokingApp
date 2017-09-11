@@ -28,7 +28,7 @@ export default StyleSheet.create({
   },
   scrollview: {
     flex: 1,
-    marginTop: 20
+
   },
   title: {
     marginTop: 15,
@@ -235,7 +235,7 @@ export default StyleSheet.create({
     alignSelf: 'center',
     height: 150,
     marginTop: 20,
-    width: 200
+    width: 250
   },
   cigaretteDetailListViewItem: {
     flexDirection: 'row',
@@ -260,18 +260,39 @@ export default StyleSheet.create({
     justifyContent: 'flex-end',
     alignItems: 'center'
   },
+  dayDetailIcon:{
+    width:20,
+    height:20,
+    alignSelf: 'center',
+    marginLeft: 15,
+    marginRight: 15,
+    marginTop:2,
+    marginBottom:2
+  },
   //Footer
-  footerContainer: {
-    //marginBottom: 100,
-    flexDirection: 'row',
+  footerContainer:{
+    //marginTop: 20,
+    flexDirection: 'column',
+    flex:1,
     justifyContent: 'space-between',
     paddingLeft: 15,
     paddingRight: 15,
-    flex:0.5
+  },
+  footerContainerCard: {
+    //marginTop: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    flex:1
   },
   footerTitle: {
     color: 'white',
     fontSize: 11,
     fontWeight: 'bold'
+  },
+  footerIcon:{
+    width: 25,
+    height: 25,
+    alignSelf: 'center',
+    justifyContent: 'center',
   }
 });

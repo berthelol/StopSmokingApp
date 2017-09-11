@@ -57,13 +57,15 @@ export default StyleSheet.create({
     },
     dataContainer: {
         justifyContent: 'center',
+        //  justifyContent: 'space-between',
         paddingTop: 40 - entryBorderRadius,
-        paddingBottom: 20,
-        paddingHorizontal: 16,
+        paddingBottom: 40- entryBorderRadius,
+        //marginBottom:15,
+        //paddingHorizontal: 16,
         backgroundColor: 'white',
         borderBottomLeftRadius: entryBorderRadius,
         borderBottomRightRadius: entryBorderRadius,
-        flexDirection:"row"
+        //flexDirection:"row"
     },
     dataItemContainer:{
       justifyContent: 'center',

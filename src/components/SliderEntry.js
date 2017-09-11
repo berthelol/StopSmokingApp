@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import styles from '../styles/SliderEntry.style';
 import {Config,format_time} from '../Config';
 import {Actions} from 'react-native-router-flux';
+import Footer from './Footer';
 
 export default class SliderEntry extends Component {
 
@@ -30,22 +31,7 @@ export default class SliderEntry extends Component {
                   <Text style={styles.calTextString}>{Config.monthNames[dateformat.getMonth()]}</Text>
                 </View>
                 <View style={styles.dataContainer}>
-
-                  <View style={styles.dataItemContainer}>
-                    <Text style={styles.dataItemContainerTitle} >Vie Perdue</Text>
-                    <Text style={styles.subtitle} >{format_time(cigarette_amount*this.props.timePerCigarette*60)}</Text>
-                  </View>
-
-                  <View style={styles.dataItemContainer}>
-                    <Text style={styles.dataItemContainerTitle} >Fumées</Text>
-                    <Text style={[styles.subtitle,{fontWeight: 'bold',fontSize:18}]} >{cigarette_amount}</Text>
-                  </View>
-
-                  <View style={styles.dataItemContainer}>
-                    <Text style={styles.dataItemContainerTitle} >Dépensé</Text>
-                    <Text style={styles.subtitle} >{cigarette_amount_price.toFixed(2)}€</Text>
-                  </View>
-
+                  <Footer lowerFooter={false} mainContainerStyle={{marginBottom:25}} color={{color:'rgba(127,127,127,0.90)'}} mainTextStyles ={{fontSize: 13}} sideTextStyles={{fontSize: 11}} cigarettes={cigarettes} />
                 </View>
             </TouchableOpacity>
         );

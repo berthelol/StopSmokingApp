@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
-import {View, Text, ListView, AsyncStorage} from 'react-native';
+import {View, Text, ListView, AsyncStorage,Image} from 'react-native';
 import styles from '../styles/index.style';
 import MapView from 'react-native-maps';
 import {Config,format_time} from '../Config';
+import Footer from './Footer';
 
 export default class DayDetail extends Component {
   state = {
@@ -11,16 +12,16 @@ export default class DayDetail extends Component {
     minute_separator: Config.minute_separator
   }
   componentWillMount() {
+    this.createDataSource(this.props.day);
     AsyncStorage.getItem('minute_separator').then((minute_separator) => {
       if(minute_separator!=null)
         this.setState({minute_separator: parseInt(minute_separator)});
     });
-    this.createDataSource(this.props.day);
   }
   componentDidMount() {
     const LATITUDE_DELTA = 0.0922;
     const LONGITUDE_DELTA = 0.0421;
-    navigator.geolocation.getCurrentPosition((position) => {
+    /*navigator.geolocation.getCurrentPosition((position) => {
       this.setState({
         currentRegion: {
           latitude: position.coords.latitude,
@@ -46,7 +47,7 @@ export default class DayDetail extends Component {
         }
       });
     });
-    this.createMarkers(this.props.day.cigarettes);
+    this.createMarkers(this.props.day.cigarettes);*/
   }
   componentWillReceiveProps(nextProps) {
     //next props are the the new set of props that will be render
@@ -97,6 +98,30 @@ export default class DayDetail extends Component {
       }]}>+{format_time(time_difference*60)}</Text>
     }
   }
+  renderIconLabel(cigarette){
+    switch (cigarette.label) {
+      case "Home":
+        return <Image
+          source={require('../images/Home.png')}
+          style={styles.dayDetailIcon}
+        />
+        break;
+      case "Work":
+      return <Image
+        source={require('../images/Work.png')}
+        style={styles.dayDetailIcon}
+      />
+        break;
+      case "Other":
+      return <Image
+        source={require('../images/Other.png')}
+        style={styles.dayDetailIcon}
+      />
+        break;
+      default:
+
+    }
+  }
   renderRow(cigarette, sectionId, rowId) {
     rowId = parseInt(rowId);
     return (
@@ -108,6 +133,7 @@ export default class DayDetail extends Component {
         {this.renderTimeBetweenCigarette(rowId != 0
           ? this.props.day.cigarettes[rowId - 1]
           : null, cigarette)}
+          {this.renderIconLabel(cigarette)}
       </View>
     )
   }
@@ -121,7 +147,7 @@ export default class DayDetail extends Component {
       <View>
         <Text style={styles.dayDetailDateHeader} >{this.renderDate()}</Text>
         <ListView enableEmptySections dataSource={this.dataSource} renderRow={this.renderRow.bind(this)} style={styles.cigaretteDetailListView} renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator}/>}/>
-        
+        <Footer lowerFooter color={{color:'rgba(127,127,127,0.90)'}} cigarettes={this.props.day.cigarettes}/>
         {/* <MapView style={styles.map} initialRegion={this.state.currentRegion} showsUserLocation={true}>
           {this.state.markers.map(marker => (<MapView.Marker key={marker.id} coordinate={marker.latlng} title={marker.title} description={marker.description}/>))}
         </MapView> */}

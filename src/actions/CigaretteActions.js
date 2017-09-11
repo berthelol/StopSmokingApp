@@ -8,7 +8,9 @@ import {
   FETCH_CIGARETTES_SUCCESS,
   FETCH_CIGARETTES_FAILURE,
   LAST_CIGARETTE_FETCH_SUCCESS,
-  LAST_CIGARETTE_FETCH_FAILURE
+  LAST_CIGARETTE_FETCH_FAILURE,
+  CIGARETTE_DELETE_SUCCESS,
+  CIGARETTE_DELETE_FAILURE
 } from './types';
 import {Actions} from 'react-native-router-flux';
 import axios from 'axios';
@@ -61,7 +63,7 @@ export const addCigarette = (timeOffset = 0,user) => {
               }
             }).then(function(response) {
               dispatch(fetchDays());
-              dispatch(fetchLastCigarette());            
+              dispatch(fetchLastCigarette());
               dispatch({type: ADD_CIGARETTE_SUCCESS, payload: label});
             }).catch(function(error) {
               console.log(error);
@@ -77,6 +79,30 @@ export const addCigarette = (timeOffset = 0,user) => {
   }
 };
 
+export const deleteLastCigarette = (id) => {
+  return (dispatch) =>{
+    AsyncStorage.getItem('token').then((token) => {
+      axios({
+        method: 'delete',
+        url: `${Config.API_URL}cigarettes/${id}`,
+        headers: {
+          'Authorization': token
+        }
+      }).then(function(response) {
+        console.log(response);
+        if(response.status==200){
+          dispatch({type: CIGARETTE_DELETE_SUCCESS});
+          dispatch(fetchDays());
+          dispatch(fetchLastCigarette());
+        }
+      }).catch(function(error) {
+        console.log(error);
+        dispatch({type: CIGARETTE_DELETE_FAILURE});
+      });
+    });
+  }
+}
+
 const getLocationSurroundingLabel = (currentLocation,home,work,cb) => {
   if(home!=null){
     if(calculateDistance(currentLocation,home))
@@ -88,7 +114,7 @@ const getLocationSurroundingLabel = (currentLocation,home,work,cb) => {
   }
   if(home!=null&&work!=null)
     return cb("Other");
-  return cb("Null");
+  return cb("Other");
 }
 const calculateDistance = function(p1, p2) {
   const rad = function(x) {

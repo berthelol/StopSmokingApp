@@ -14,7 +14,7 @@ import styles from '../styles/index.style';
 import {Actions} from 'react-native-router-flux';
 import Header from './Header';
 import {connect} from 'react-redux';
-import {fetchDays, addCigarette,fetchLastCigarette} from '../actions';
+import {fetchDays, addCigarette,fetchLastCigarette,deleteLastCigarette} from '../actions';
 import Settings from './Settings';
 import Footer from './Footer';
 import {format_time,Config} from '../Config';
@@ -69,8 +69,18 @@ class Main extends Component {
       return <Spinner />
     }
     if(last_cigarette==null)
-      return <Text style={styles.title}> Appuyez sur la cigarette à chaque fois que vous en fumez une</Text>
-    return <Text style={styles.subtitle}>{format_time(last_cigarette.time)}</Text>;
+      return <Text style={[styles.title,{fontSize:18}]}> Appuyez sur la cigarette à chaque fois que vous en fumez une. Laisse appuyer longtemps si jamais tu a oublié de la comptez la dernière fois. Laisse appuyer sur l'heure de la dernière cigarette pour l'annuler.</Text>
+    return (
+      <TouchableOpacity
+        onLongPress={this.deleteLastCigarette.bind(this)}
+        >
+        <Text style={styles.subtitle}>{format_time(last_cigarette.time)}</Text>
+        <Text>{this.props.lastDelete}</Text>
+      </TouchableOpacity>
+    );
+  }
+  deleteLastCigarette(){
+    this.props.deleteLastCigarette(this.props.last.cigarette_id);
   }
   renderAddCigarette(){
     if(this.props.add_loading==false){
@@ -142,6 +152,14 @@ class Main extends Component {
     }
   }
   render() {
+    const cigarettes = [];
+    if(this.props.days.length!=0){
+      this.props.days.forEach((day)=>{
+        day.cigarettes.forEach((cigarette)=>{
+          cigarettes.push(cigarette);
+        });
+      });
+    }
     return (
       <View style={styles.container}>
         <Header username={this.props.user.username} onModalShow={this.onModalShow.bind(this)}/>
@@ -151,8 +169,8 @@ class Main extends Component {
         <Text style={[styles.title,this.props.last==null?{display: 'none'}:{}]}>Dernière fumée:</Text>
         {this.renderLastCigarette(this.props.last)}
         {this.renderLabelCigarette()}
-        <MyCarousel/>
-        <Footer />
+        <MyCarousel />
+        <Footer lowerFooter cigarettes={cigarettes} mainContainerStyle={{marginBottom:100,flex:1}}/>
         <Settings onMinuteSeparatorChange={(minute_separator)=>this.setState({minute_separator:minute_separator*60})} visible={this.state.modalShow} onLogout={this.onLogout.bind(this)} onExit={this.onExit.bind(this)}/>
       </View>
     );
@@ -161,8 +179,8 @@ class Main extends Component {
 
 mapStateToProps = (state) => {
   const {user} = state.auth;
-  const {last,add_loading,label} = state.cigarette;
-  return {user,last,add_loading,label};
+  const {last,add_loading,label,days,lastDelete} = state.cigarette;
+  return {user,last,add_loading,label,days,lastDelete};
 }
 
-export default connect(mapStateToProps, {fetchDays, addCigarette,fetchLastCigarette})(Main);
+export default connect(mapStateToProps, {fetchDays, addCigarette,fetchLastCigarette,deleteLastCigarette})(Main);

@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {View, Text, ListView, AsyncStorage,Image} from 'react-native';
 import styles from '../styles/index.style';
-import MapView from 'react-native-maps';
 import {Config,format_time} from '../Config';
 import Footer from './Footer';
+import MapView from 'react-native-maps';
 
 export default class DayDetail extends Component {
   state = {
@@ -19,9 +19,11 @@ export default class DayDetail extends Component {
     });
   }
   componentDidMount() {
-    const LATITUDE_DELTA = 0.0922;
-    const LONGITUDE_DELTA = 0.0421;
-    /*navigator.geolocation.getCurrentPosition((position) => {
+    //ZOOM
+    const LATITUDE_DELTA = 0.03358723958820065;
+    const LONGITUDE_DELTA = 0.04250270688370961;
+
+    navigator.geolocation.getCurrentPosition((position) => {
       this.setState({
         currentRegion: {
           latitude: position.coords.latitude,
@@ -47,7 +49,7 @@ export default class DayDetail extends Component {
         }
       });
     });
-    this.createMarkers(this.props.day.cigarettes);*/
+    this.createMarkers(this.props.day.cigarettes);
   }
   componentWillReceiveProps(nextProps) {
     //next props are the the new set of props that will be render
@@ -57,6 +59,9 @@ export default class DayDetail extends Component {
   createDataSource({cigarettes}) {
     const ds = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1 !== r2
+    });
+    cigarettes.sort(function(a, b) {
+      return parseFloat(a.time) - parseFloat(b.time);
     });
     this.dataSource = ds.cloneWithRows(cigarettes);
   }
@@ -147,10 +152,14 @@ export default class DayDetail extends Component {
       <View>
         <Text style={styles.dayDetailDateHeader} >{this.renderDate()}</Text>
         <ListView enableEmptySections dataSource={this.dataSource} renderRow={this.renderRow.bind(this)} style={styles.cigaretteDetailListView} renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator}/>}/>
-        <Footer lowerFooter color={{color:'rgba(127,127,127,0.90)'}} cigarettes={this.props.day.cigarettes}/>
-        {/* <MapView style={styles.map} initialRegion={this.state.currentRegion} showsUserLocation={true}>
-          {this.state.markers.map(marker => (<MapView.Marker key={marker.id} coordinate={marker.latlng} title={marker.title} description={marker.description}/>))}
-        </MapView> */}
+        <Footer lowerFooter sideTextStyles={{fontSize:12}} mainContainerStyle={{marginTop:20}} color={{color:'rgba(127,127,127,0.90)'}} cigarettes={this.props.day.cigarettes}/>
+        <View style={styles.mapContainer}>
+          <MapView style={styles.map} initialRegion={this.state.currentRegion} showsUserLocation={true} fitToElements={true}>
+            {this.state.markers.map(marker => (<MapView.Marker key={marker.id} coordinate={marker.latlng} title={marker.title} description={marker.description}/>))}
+          </MapView>
+        </View>
+
+
       </View>
     )
   }

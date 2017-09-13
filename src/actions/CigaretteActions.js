@@ -43,7 +43,6 @@ export const addCigarette = (timeOffset = 0,user) => {
     getDateAndTime(timeOffset,function(date, time) {
       navigator.geolocation.getCurrentPosition((position) => {
         getLocationSurroundingLabel({lat:position.coords.latitude,lng:position.coords.longitude},user.home_address.lat==0?null:user.home_address,user.work_address.lat==0?null:user.work_address, (label) => {
-          console.log(label);
           AsyncStorage.multiGet(['token', 'packageprice']).then((storage) => {
             axios({
               method: 'post',

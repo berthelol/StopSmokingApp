@@ -8,6 +8,7 @@ import Footer from './Footer';
 export default class SliderEntry extends Component {
 
     goToDayDetail(){
+      //sort by time
       Actions.dayDetail({day:this.props});
     }
 

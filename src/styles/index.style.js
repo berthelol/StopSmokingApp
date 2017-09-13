@@ -254,11 +254,15 @@ export default StyleSheet.create({
     backgroundColor: '#8E8E8E'
   },
   map: {
-    marginTop: 25,
+    flex:1,
     height: 400,
     width: 400,
     justifyContent: 'flex-end',
-    alignItems: 'center'
+    alignItems: 'center',
+     ...StyleSheet.absoluteFillObject,
+  },
+  mapContainer:{
+    marginTop:120
   },
   dayDetailIcon:{
     width:20,

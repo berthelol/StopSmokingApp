@@ -4,8 +4,9 @@ import styles from '../styles/index.style';
 import {Config,format_time} from '../Config';
 import Footer from './Footer';
 import MapView from 'react-native-maps';
+import {connect} from 'react-redux';
 
-export default class DayDetail extends Component {
+class DayDetail extends Component {
   state = {
     currentRegion: null,
     markers: [],
@@ -147,6 +148,18 @@ export default class DayDetail extends Component {
     return `${Config.dayNames[date.getDay()]} ${date.getDate()} ${Config.monthNames[date.getMonth()]}`;
   }
 
+  renderHomeMarker(){
+    const {lat,lng} = this.props.user.home_address;
+    const latlng = {latitude:lat,longitude:lng};
+    return <MapView.Marker image={require("../images/Home.png")} key={"home"} coordinate={latlng} title={"Home"} description={"Home"}/>
+  }
+
+  renderWorkMarker(){  
+    const {lat,lng} = this.props.user.work_address;
+    const latlng = {latitude:lat,longitude:lng};
+    return <MapView.Marker image={require("../images/Work.png")} key={"work"} coordinate={latlng} title={"Work"} description={"Work"}/>
+  }
+
   render() {
     return (
       <View>
@@ -156,11 +169,18 @@ export default class DayDetail extends Component {
         <View style={styles.mapContainer}>
           <MapView style={styles.map} initialRegion={this.state.currentRegion} showsUserLocation={true} fitToElements={true}>
             {this.state.markers.map(marker => (<MapView.Marker key={marker.id} coordinate={marker.latlng} title={marker.title} description={marker.description}/>))}
+            {this.renderWorkMarker()}
+            {this.renderHomeMarker()}
           </MapView>
         </View>
-
-
       </View>
     )
   }
 };
+
+mapStateToProps = ({auth}) => {
+  const {user} = auth;
+  return {user};
+}
+
+export default connect(mapStateToProps,{})(DayDetail);

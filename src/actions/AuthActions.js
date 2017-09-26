@@ -66,11 +66,13 @@ export const loginUserWithoutAskingToken = (token) => {
 
 export const loginUser = ({username, password}) => {
   return (dispatch) => {
+    console.log(`${Config.API_URL}authenticate/token/local`);
     dispatch({type: LOGIN_USER});
     axios.post(`${Config.API_URL}authenticate/token/local`, {
       username: username,
       password: password
     }).then(function(response) {
+      console.log(response);
       if (response.status == 401) {
         loginUserFail(dispatch);
       }else {
@@ -79,6 +81,7 @@ export const loginUser = ({username, password}) => {
         loginUserSuccess(dispatch,`JWT ${data.token}`);
       }
     }).catch(function(error) {
+      console.log(error);
       loginUserFail(dispatch);
     });
   };
@@ -93,6 +96,7 @@ const loginUserFail = (dispatch) => {
 }
 
 const loginUserSuccess = (dispatch,token) => {
+  console.log(Config.API_URL);
   axios({
     method: 'get',
     url: `${Config.API_URL}users/token`,

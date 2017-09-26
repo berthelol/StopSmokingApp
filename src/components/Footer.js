@@ -63,7 +63,7 @@ import {Config,format_time} from '../Config';
     return (
       <View style={[styles.footerContainer,mainContainerStyle]}>
         <View style={styles.footerContainerCard}>
-          <View>
+          <View >
             <Text style={[styles.footerTitle,color,sideTextStyles]} >Vie perdue</Text>
             <Text style={[styles.subtitle,color,sideTextStyles]} >{this.renderTotalLifeLost()}</Text>
           </View>

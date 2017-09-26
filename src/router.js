@@ -14,7 +14,7 @@ const RouterComponent =()=> {
           <Scene key="login" component={LoginForm} title="Stop Smoking App" initial/>
           <Scene key="inscription" component={InscriptionForm} title="Inscription"/>
         </Scene>
-        <Scene key="home" >
+        <Scene key="home" panHandlers={null} >
           <Scene key="main" hideNavBar component={Main}/>
           <Scene key="dayDetail" component={DayDetail}/>
         </Scene>

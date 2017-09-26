@@ -89,5 +89,27 @@ export default StyleSheet.create({
         color: colors.gray,
         fontSize: 12,
         fontStyle: 'italic'
+    },
+    loadRest:{
+      width:itemWidth,
+      flex: 1,
+      backgroundColor: colors.gray,
+      borderTopLeftRadius: entryBorderRadius+10,
+      borderTopRightRadius: entryBorderRadius+10,
+      borderBottomLeftRadius: entryBorderRadius+10,
+      borderBottomRightRadius: entryBorderRadius+10,
+      justifyContent: 'center',
+      alignItems: 'center'
+    },
+    loadRestIcon:{
+      width:60,
+      height:60
+    },
+    loadRestText:{
+      fontSize:20,
+      fontWeight: 'bold',
+      color:'white',
+      marginTop:15,
+      textAlign:'center'
     }
 });

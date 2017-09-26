@@ -1,6 +1,6 @@
 export const Config = {
   //API_URL: 'https://smokingstop.herokuapp.com/',
-  //API_URL:'http://localhost:3000/',
+  //API_URL:'http://www.api.stopsmoking.loicberthelot.com/',
   API_URL:'http://77.201.202.226/',
   monthNames: [
     "Janvier",
@@ -27,7 +27,8 @@ export const Config = {
   ],
   lifetimePerCigarette:11,
   package_price_default:6.5,
-  minute_separator:90
+  minute_separator:90,
+  slides_limit:7
 };
 
 export const format_time = (time) => {

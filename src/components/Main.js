@@ -19,12 +19,14 @@ import Settings from './Settings';
 import Footer from './Footer';
 import {format_time,Config} from '../Config';
 
+//no slide back to login
 class Main extends Component {
   state = {
     modalShow: false,
     selectPastHours:false,
     cigaretteOffset:0,
-    minute_separator:Config.minute_separator*60
+    minute_separator:Config.minute_separator*60,
+    showPastel:false
   };
   componentWillMount() {
     AsyncStorage.getItem('minute_separator').then((minute_separator) => {
@@ -32,7 +34,7 @@ class Main extends Component {
         this.setState({minute_separator: parseInt(minute_separator)*60});
     });
     Keyboard.dismiss();
-    this.props.fetchDays();
+    this.props.fetchDays(Config.slides_limit);
     this.props.fetchLastCigarette();
   }
   onModalShow() {
@@ -57,8 +59,11 @@ class Main extends Component {
     this.setState({modalShow:false});
   }
   addCigarette() {
+    this.setState({showPastel:true});
+    const that = this;
+    setTimeout(function(){ that.setState({showPastel:false}) }, 2000);
     this.setState({selectPastHours:false});
-    this.props.addCigarette(this.state.selectPastHours==true?this.state.cigaretteOffset:null,this.props.user);
+    this.props.addCigarette(this.state.selectPastHours==true?this.state.cigaretteOffset:null,this.props.user,this.props.slides_limit);
   }
   addLongPressCigarette(){
     this.setState({selectPastHours:!this.state.selectPastHours});
@@ -80,7 +85,7 @@ class Main extends Component {
     );
   }
   deleteLastCigarette(){
-    this.props.deleteLastCigarette(this.props.last.cigarette_id);
+    this.props.deleteLastCigarette(this.props.last.cigarette_id,this.props.slides_limit);
   }
   renderAddCigarette(){
     if(this.props.add_loading==false){
@@ -110,12 +115,26 @@ class Main extends Component {
     }
   }
   renderPastelTimeCigarette(){
+
+    if(this.state.showPastel){
+      switch (this.props.label) {
+      case "Home":
+        return <Image source={require('../images/Home.png')} style={styles.lungsIcon}/>
+        break;
+      case "Work":
+        return <Image source={require('../images/Work.png')} style={styles.lungsIcon}/>
+        break;
+      case "Other":
+        return <Image source={require('../images/Other.png')} style={styles.lungsIcon}/>
+      }
+    }
     if(this.props.last==''||this.props.last==null)return <View></View>
     const now = new Date();
     const time_now = now.getMinutes() * 60 + now.getHours() * 3600;
     let time_difference = time_now-this.props.last.time;
     time_difference>=0?"":time_difference+=86400;
     const variance = this.state.minute_separator - time_difference;
+    let that = this;
     if (variance < 0) {
       return <View>
         <Image
@@ -138,19 +157,6 @@ class Main extends Component {
       </View>
     }
   }
-  renderLabelCigarette(){
-    if(this.props.label){
-      switch (this.props.label) {
-        case "Home":
-          return <Image source={require('../images/Home.png')} style={styles.lungsIcon}/>
-          break;
-          case "Work":
-          return <Image source={require('../images/Work.png')} style={styles.lungsIcon}/>
-          break;
-        default:
-      }
-    }
-  }
   render() {
     const cigarettes = [];
     if(this.props.days.length!=0){
@@ -168,7 +174,6 @@ class Main extends Component {
         {this.renderPastelTimeCigarette()}
         <Text style={[styles.title,this.props.last==null?{display: 'none'}:{}]}>Dernière fumée:</Text>
         {this.renderLastCigarette(this.props.last)}
-        {this.renderLabelCigarette()}
         <MyCarousel />
         <Footer lowerFooter cigarettes={cigarettes} mainContainerStyle={{marginBottom:100,flex:1}}/>
         <Settings onMinuteSeparatorChange={(minute_separator)=>this.setState({minute_separator:minute_separator*60})} visible={this.state.modalShow} onLogout={this.onLogout.bind(this)} onExit={this.onExit.bind(this)}/>
@@ -179,8 +184,8 @@ class Main extends Component {
 
 mapStateToProps = (state) => {
   const {user} = state.auth;
-  const {last,add_loading,label,days,lastDelete} = state.cigarette;
-  return {user,last,add_loading,label,days,lastDelete};
+  const {last,add_loading,label,days,lastDelete,slides_limit} = state.cigarette;
+  return {user,last,add_loading,label,days,lastDelete,slides_limit};
 }
 
 export default connect(mapStateToProps, {fetchDays, addCigarette,fetchLastCigarette,deleteLastCigarette})(Main);

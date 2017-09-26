@@ -33,3 +33,5 @@ export const SET_HOME_ADDRESS_SUCCESS = 'set_home_address_success';
 export const SET_HOME_ADDRESS_FAILURE = 'set_home_address_failure';
 export const SET_WORK_ADDRESS_SUCCESS = 'set_work_address_success';
 export const SET_WORK_ADDRESS_FAILURE = 'set_work_address_failure';
+
+export const SLIDES_LIMIT = 'slides_limit';

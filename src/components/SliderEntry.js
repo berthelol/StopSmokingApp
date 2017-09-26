@@ -1,7 +1,7 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import styles from '../styles/SliderEntry.style';
-import {Config,format_time} from '../Config';
+import {Config} from '../Config';
 import {Actions} from 'react-native-router-flux';
 import Footer from './Footer';
 

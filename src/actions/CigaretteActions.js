@@ -10,20 +10,21 @@ import {
   LAST_CIGARETTE_FETCH_SUCCESS,
   LAST_CIGARETTE_FETCH_FAILURE,
   CIGARETTE_DELETE_SUCCESS,
-  CIGARETTE_DELETE_FAILURE
+  CIGARETTE_DELETE_FAILURE,
+  SLIDES_LIMIT
 } from './types';
 import {Actions} from 'react-native-router-flux';
 import axios from 'axios';
 import {AsyncStorage} from 'react-native';
 import {Config} from '../Config';
 
-export const fetchDays = () => {
+export const fetchDays = (limit=null) => {
   return (dispatch) => {
     //dispatch({type: CIGARETTE_FETCH});
     AsyncStorage.getItem('token').then((token) => {
       axios({
         method: 'get',
-        url: `${Config.API_URL}days`,
+        url: `${Config.API_URL}days?limit=${limit}`,
         headers: {
           'Authorization': token
         }
@@ -37,7 +38,7 @@ export const fetchDays = () => {
   }
 }
 
-export const addCigarette = (timeOffset = 0,user) => {
+export const addCigarette = (timeOffset = 0,user,limit) => {
   return (dispatch) => {
     dispatch({type: ADD_CIGARETTE});
     getDateAndTime(timeOffset,function(date, time) {
@@ -61,7 +62,7 @@ export const addCigarette = (timeOffset = 0,user) => {
                 'Authorization': storage[0][1]
               }
             }).then(function(response) {
-              dispatch(fetchDays());
+              dispatch(fetchDays(limit));
               dispatch(fetchLastCigarette());
               dispatch({type: ADD_CIGARETTE_SUCCESS, payload: label});
             }).catch(function(error) {
@@ -78,7 +79,7 @@ export const addCigarette = (timeOffset = 0,user) => {
   }
 };
 
-export const deleteLastCigarette = (id) => {
+export const deleteLastCigarette = (id,limit) => {
   return (dispatch) =>{
     AsyncStorage.getItem('token').then((token) => {
       axios({
@@ -88,10 +89,9 @@ export const deleteLastCigarette = (id) => {
           'Authorization': token
         }
       }).then(function(response) {
-        console.log(response);
         if(response.status==200){
           dispatch({type: CIGARETTE_DELETE_SUCCESS});
-          dispatch(fetchDays());
+          dispatch(fetchDays(limit));
           dispatch(fetchLastCigarette());
         }
       }).catch(function(error) {
@@ -99,6 +99,13 @@ export const deleteLastCigarette = (id) => {
         dispatch({type: CIGARETTE_DELETE_FAILURE});
       });
     });
+  }
+}
+
+export const changeSlidesLimit = (limit) => {
+  return (dispatch)=>{
+    dispatch({type:SLIDES_LIMIT,payload:limit});
+    dispatch(fetchDays(limit));
   }
 }
 

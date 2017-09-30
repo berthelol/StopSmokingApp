@@ -59,11 +59,13 @@ class Main extends Component {
     this.setState({modalShow:false});
   }
   addCigarette() {
-    this.setState({showPastel:true});
     const that = this;
-    setTimeout(function(){ that.setState({showPastel:false}) }, 2000);
     this.setState({selectPastHours:false});
-    this.props.addCigarette(this.state.selectPastHours==true?this.state.cigaretteOffset:null,this.props.user,this.props.slides_limit);
+    this.props.addCigarette(this.state.selectPastHours==true?this.state.cigaretteOffset:null,this.props.user,this.props.slides_limit,
+      (label)=>{
+        that.setState({showPastel:label});
+        setTimeout(function(){ that.setState({showPastel:false}) }, 2000);
+      });
   }
   addLongPressCigarette(){
     this.setState({selectPastHours:!this.state.selectPastHours});
@@ -115,9 +117,8 @@ class Main extends Component {
     }
   }
   renderPastelTimeCigarette(){
-
     if(this.state.showPastel){
-      switch (this.props.label) {
+      switch (this.state.showPastel) {
       case "Home":
         return <Image source={require('../images/Home.png')} style={styles.lungsIcon}/>
         break;

@@ -38,7 +38,7 @@ export const fetchDays = (limit=null) => {
   }
 }
 
-export const addCigarette = (timeOffset = 0,user,limit) => {
+export const addCigarette = (timeOffset = 0,user,limit,cb) => {
   return (dispatch) => {
     dispatch({type: ADD_CIGARETTE});
     getDateAndTime(timeOffset,function(date, time) {
@@ -62,9 +62,10 @@ export const addCigarette = (timeOffset = 0,user,limit) => {
                 'Authorization': storage[0][1]
               }
             }).then(function(response) {
+              cb(label);
               dispatch(fetchDays(limit));
               dispatch(fetchLastCigarette());
-              dispatch({type: ADD_CIGARETTE_SUCCESS, payload: label});
+              dispatch({type: ADD_CIGARETTE_SUCCESS});
             }).catch(function(error) {
               console.log(error);
               dispatch({type: ADD_CIGARETTE_FAILURE});

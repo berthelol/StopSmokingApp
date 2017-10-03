@@ -75,7 +75,8 @@ export default StyleSheet.create({
   //Header
   header: {
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    //flex:0.05
   },
   headerGreatings: {
     alignSelf: 'flex-start',
@@ -272,6 +273,10 @@ export default StyleSheet.create({
     marginRight: 15,
     marginTop:2,
     marginBottom:2
+  },
+  labelHomeWork:{
+    width:20,
+    height:20
   },
   //Footer
   footerContainer:{

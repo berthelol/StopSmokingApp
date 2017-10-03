@@ -74,8 +74,7 @@ class DayDetail extends Component {
           latitude: cigarette.lat,
           longitude: cigarette.lng
         },
-        title: '' + cigarette.cigarette_id,
-        description: ""
+        title: format_time(cigarette.time)
       };
     });
     this.setState({markers: markers})
@@ -149,15 +148,15 @@ class DayDetail extends Component {
   }
 
   renderHomeMarker(){
-    const {lat,lng} = this.props.user.home_address;
+    const {lat,lng,address} = this.props.user.home_address;
     const latlng = {latitude:lat,longitude:lng};
-    return <MapView.Marker image={require("../images/Home.png")} key={"home"} coordinate={latlng} title={"Home"} description={"Home"}/>
+    return <MapView.Marker image={require("../images/Home-64.png")} key={"home"} coordinate={latlng} title={"Home"} description={address}/>
   }
 
-  renderWorkMarker(){  
-    const {lat,lng} = this.props.user.work_address;
+  renderWorkMarker(){
+    const {lat,lng,address} = this.props.user.work_address;
     const latlng = {latitude:lat,longitude:lng};
-    return <MapView.Marker image={require("../images/Work.png")} key={"work"} coordinate={latlng} title={"Work"} description={"Work"}/>
+    return <MapView.Marker image={require("../images/Work-64.png")} key={"work"} coordinate={latlng} title={"Work"} description={address}/>
   }
 
   render() {
@@ -168,7 +167,7 @@ class DayDetail extends Component {
         <Footer lowerFooter sideTextStyles={{fontSize:12}} mainContainerStyle={{marginTop:20}} color={{color:'rgba(127,127,127,0.90)'}} cigarettes={this.props.day.cigarettes}/>
         <View style={styles.mapContainer}>
           <MapView style={styles.map} initialRegion={this.state.currentRegion} showsUserLocation={true} fitToElements={true}>
-            {this.state.markers.map(marker => (<MapView.Marker key={marker.id} coordinate={marker.latlng} title={marker.title} description={marker.description}/>))}
+            {this.state.markers.map(marker => (<MapView.Marker key={marker.id} coordinate={marker.latlng} title={marker.title} />))}
             {this.renderWorkMarker()}
             {this.renderHomeMarker()}
           </MapView>
